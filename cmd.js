@@ -3,7 +3,8 @@
 const argv = require('minimist')(process.argv.slice(2), {
   alias: {
     t: 'tradle-server',
-    p: 'port'
+    p: 'port',
+    r: 'repl'
   },
   default: {
     repl: true,
@@ -12,17 +13,16 @@ const argv = require('minimist')(process.argv.slice(2), {
   }
 })
 
-const app = require('./lib/app')({
+const { bot } = require('./lib/app')({
   tradleServerURL: argv['tradle-server'],
   port: argv.port,
   dbPath: './db.json'
 })
 
-if (argv.repl) {
+console.log('Listening on port ' + argv.port)
+
+if (String(argv.repl) !== 'false') {
   const pepper = '\uD83C\uDF36  '
   const prompt = typeof argv.repl === 'string' ? argv.repl : pepper
-  require('./lib/repl')({
-    prompt: prompt,
-    bot: app.bot
-  })
+  require('./lib/repl')({ prompt, bot })
 }

@@ -1,0 +1,11 @@
+
+exposed functions:
+  send(providerHandle, userId, payload)
+  togglePrintReceived
+
+exposed objects:
+  users
+    users.new(id)
+    users.list()
+    users.del(id)
+    users.get(id)
