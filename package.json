@@ -19,6 +19,7 @@
     "node": ">=6"
   },
   "devDependencies": {
+    "@tradle/models": "https://github.com/tradle/models",
     "tape": "^4.6.3"
   },
   "scripts": {
