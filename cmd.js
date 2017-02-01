@@ -2,27 +2,25 @@
 
 const argv = require('minimist')(process.argv.slice(2), {
   alias: {
-    t: 'tradle-server',
-    p: 'port',
-    r: 'repl'
+    c: 'conf',
   },
   default: {
-    repl: true,
-    port: 8000,
-    'tradle-server': 'http://localhost:44444'
+    conf: './sample-conf.json'
   }
 })
 
-const { bot } = require('./lib/app')({
-  tradleServerURL: argv['tradle-server'],
-  port: argv.port,
-  dbPath: './db.json'
-})
+const conf = require(argv.conf)
+const { bot } = require('./lib/app')(conf)
 
-console.log('Listening on port ' + argv.port)
+console.log('Listening on port ' + conf.port)
 
-if (String(argv.repl) !== 'false') {
+if (conf.strategy) {
+  const installStategy = require(conf.strategy)
+  installStategy(bot)
+}
+
+if (String(conf.repl) !== 'false') {
   const pepper = '\uD83C\uDF36  '
-  const prompt = typeof argv.repl === 'string' ? argv.repl : pepper
+  const prompt = typeof conf.repl === 'string' ? conf.repl : pepper
   require('./lib/repl')({ prompt, bot })
 }

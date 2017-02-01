@@ -1,0 +1,7 @@
+{
+  "port": 8000,
+  "repl": "\uD83C\uDF36  ",
+  "providerURL": "http://localhost:44444/taxtime",
+  "dbPath": "./db.json",
+  "strategy": "./lib/strategy/silly.js"
+}

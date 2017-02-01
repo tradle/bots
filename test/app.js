@@ -11,14 +11,15 @@ const {
 } = require('../lib/utils')
 
 const TRADLE_SERVER_PORT = 27147
-const TRADLE_SERVER_URL = `http://localhost:${TRADLE_SERVER_PORT}`
+const PROVIDER_HANDLE = 'taxtime'
+const PROVIDER_URL = `http://localhost:${TRADLE_SERVER_PORT}/${PROVIDER_HANDLE}`
 const PORT = 27148
-const APP_URL = `http://localhost:${PORT}/`
+const APP_URL = `http://localhost:${PORT}`
 
 test('send', co(function* (t) {
   const { close, bot } = createApp({
     port: PORT,
-    tradleServerURL: TRADLE_SERVER_URL
+    providerURL: PROVIDER_URL
   })
 
   const payload = createSimpleMessage('hey')
@@ -27,7 +28,7 @@ test('send', co(function* (t) {
   }
 
   const tradleServerApp = express()
-  tradleServerApp.post('/irs/message', bigJsonParser(), function (req, res) {
+  tradleServerApp.post(`/${PROVIDER_HANDLE}/message`, bigJsonParser(), function (req, res) {
     t.same(req.body, {
       to: 'ted',
       object: payload
@@ -47,7 +48,7 @@ test('send', co(function* (t) {
     tradleServer = tradleServerApp.listen(TRADLE_SERVER_PORT, resolve)
   })
 
-  yield bot.send('irs', 'ted', 'hey')
+  yield bot.send('ted', 'hey')
   t.same(bot.users.list(), {
     ted: {
       id: 'ted',
@@ -62,7 +63,7 @@ test('send', co(function* (t) {
 test('receive', co(function* (t) {
   const { close, bot } = createApp({
     port: PORT,
-    tradleServerURL: TRADLE_SERVER_URL
+    providerURL: PROVIDER_URL
   })
 
   const payload = createSimpleMessage('hey')
