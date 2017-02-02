@@ -14,9 +14,10 @@ const { bot } = require('./lib/app')(conf)
 
 console.log('Listening on port ' + conf.port)
 
-if (conf.strategy) {
-  const installStategy = require(conf.strategy)
-  installStategy(bot)
+if (conf.strategies) {
+  conf.strategies.forEach(path => {
+    bot.strategies.use(require(path))
+  })
 }
 
 if (String(conf.repl) !== 'false') {

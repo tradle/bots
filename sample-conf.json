@@ -1,7 +1,9 @@
 {
   "port": 8000,
   "repl": "\uD83C\uDF36  ",
-  "providerURL": "http://localhost:44444/taxtime",
+  "providerURL": "http://localhost:44444/loans",
   "dbPath": "./db.json",
-  "strategy": "./lib/strategy/products.js"
+  "strategies": [
+    "./lib/strategy/products.js"
+  ]
 }
