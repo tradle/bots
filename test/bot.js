@@ -17,9 +17,9 @@ test('bot.send', co(function* (t) {
   const expected = createSimpleMessage(text)
   const expectedTo = 'ted'
   const bot = createBot({
-    send: co(function* send (to, data) {
-      t.equal(to, expectedTo)
-      t.same(data, expected)
+    send: co(function* send ({ userId, payload }) {
+      t.equal(userId, expectedTo)
+      t.same(payload, expected)
     })
   })
 
@@ -28,7 +28,7 @@ test('bot.send', co(function* (t) {
     t.same(history, [{ payload: expected }])
   })
 
-  bot.send(expectedTo, text)
+  bot.send({ userId: expectedTo, payload: text })
 }))
 
 test('bot.receive', co(function* (t) {

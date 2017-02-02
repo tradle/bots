@@ -1,9 +1,12 @@
 {
-  "name": "@tradle/samplebot",
+  "name": "@tradle/bots",
   "version": "1.0.0",
   "main": "./lib/bot.js",
   "bin": "./cmd.js",
-  "repository": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tradle/bots"
+  },
   "license": "MIT",
   "dependencies": {
     "backoff": "^2.5.0",

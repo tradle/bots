@@ -62,7 +62,7 @@ test('send', co(function* (t) {
     t.end()
   })
 
-  bot.send('ted', 'hey')
+  bot.send({ userId: 'ted', payload: 'hey' })
 }))
 
 test('receive', co(function* (t) {

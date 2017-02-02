@@ -21,7 +21,7 @@ if (conf.strategies) {
 }
 
 if (String(conf.repl) !== 'false') {
-  const pepper = '\uD83C\uDF36  '
-  const prompt = typeof conf.repl === 'string' ? conf.repl : pepper
+  const pepperIcon = '\uD83C\uDF36  '
+  const prompt = typeof conf.repl === 'string' ? conf.repl : pepperIcon
   require('./lib/repl')({ prompt, bot })
 }
