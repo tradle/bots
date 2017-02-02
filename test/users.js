@@ -9,7 +9,7 @@ const {
 const manageUsers = require('../lib/users')
 
 test('users', function (t) {
-  const users = manageUsers(createDB())
+  const users = manageUsers()
   t.same(users.list(), {})
 
   const ted = { name: 'ted' }
@@ -42,7 +42,3 @@ test('users', function (t) {
 
   t.end()
 })
-
-function createDB() {
-  return setDBSchema(low())
-}

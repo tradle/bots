@@ -1,4 +1,4 @@
 node_modules/
-db.json
+users.json
 *.log
 storage/
