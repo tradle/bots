@@ -11,40 +11,45 @@ const noop = function () {}
 
 test('bot.send', co(function* (t) {
   t.plan(3)
+  t.timeoutAfter(500)
 
   const text = 'hey'
   const expected = createSimpleMessage(text)
   const expectedTo = 'ted'
   const bot = createBot({
-    db: low(),
     send: co(function* send (to, data) {
       t.equal(to, expectedTo)
       t.same(data, expected)
     })
   })
 
-  yield bot.send(expectedTo, text)
-  const { history } = bot.users.get('ted')
-  t.same(history, [{ payload: expected }])
+  bot.once('sent', function () {
+    const { history } = bot.users.get('ted')
+    t.same(history, [{ payload: expected }])
+  })
+
+  bot.send(expectedTo, text)
 }))
 
 test('bot.receive', co(function* (t) {
   t.plan(1)
+  t.timeoutAfter(500)
 
   const bot = createBot({
-    db: low(),
     send: noop
   })
 
   const payload = createSimpleMessage('hey')
   const message = { object: payload }
-  yield bot.receive({
+  bot.once('message', function () {
+    const { history } = bot.users.get('ted')
+    t.same(history, [{ payload, inbound: true }])
+  })
+
+  bot.receive({
     author: 'ted',
     object: message
   })
-
-  const { history } = bot.users.get('ted')
-  t.same(history, [{ payload, inbound: true }])
 }))
 
 function createDB() {

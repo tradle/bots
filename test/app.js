@@ -17,6 +17,8 @@ const PORT = 27148
 const APP_URL = `http://localhost:${PORT}`
 
 test('send', co(function* (t) {
+  t.timeoutAfter(500)
+
   const { close, bot } = createApp({
     port: PORT,
     providerURL: PROVIDER_URL
@@ -48,19 +50,24 @@ test('send', co(function* (t) {
     tradleServer = tradleServerApp.listen(TRADLE_SERVER_PORT, resolve)
   })
 
-  yield bot.send('ted', 'hey')
-  t.same(bot.users.list(), {
-    ted: {
-      id: 'ted',
-      history: [{ payload }]
-    }
+  bot.once('sent', function () {
+    t.same(bot.users.list(), {
+      ted: {
+        id: 'ted',
+        history: [{ payload }]
+      }
+    })
+
+    close()
+    t.end()
   })
 
-  close()
-  t.end()
+  bot.send('ted', 'hey')
 }))
 
 test('receive', co(function* (t) {
+  t.timeoutAfter(500)
+
   const { close, bot } = createApp({
     port: PORT,
     providerURL: PROVIDER_URL
@@ -71,6 +78,18 @@ test('receive', co(function* (t) {
     object: payload
   }
 
+  bot.once('message', function () {
+    t.same(bot.users.list(), {
+      ted: {
+        id: 'ted',
+        history: [{ payload, inbound: true }]
+      }
+    })
+
+    close()
+    t.end()
+  })
+
   yield request
     .post(APP_URL)
     .send({
@@ -80,14 +99,4 @@ test('receive', co(function* (t) {
         object: message
       }
     })
-
-  t.same(bot.users.list(), {
-    ted: {
-      id: 'ted',
-      history: [{ payload, inbound: true }]
-    }
-  })
-
-  close()
-  t.end()
 }))
