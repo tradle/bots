@@ -2,7 +2,6 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [What the bot is this?](#what-the-bot-is-this)
 - [Usage](#usage)
@@ -187,11 +186,11 @@ Users are automatically registered with a default state object when the first me
 ```json
 {
   "id": "..userId..", 
-  history: [] 
+  "history": [] 
 }
 ```
 
-`send` operations, and received messages get appended to `state.history`. You can store whatever your evil bot needs on the user state object, just don't forget to `bot.users.save(userState)`
+When you `bot.send(...)` or when your bot receives messages, they get appended to `state.history`. You can store whatever your evil bot needs on the user state object, just don't forget to `bot.users.save(userState)` lest the evil be thwarted.
 
 ### Known Limitations
 
