@@ -1,0 +1,17 @@
+
+These are the objects and functions available in the global scope:
+
+- bot                         [Object]
+  - bot.strategies            [Object]
+    - bot.strategies.list     [Function]    list enabled strategies
+    - bot.strategies.use      [Function]    enable a strategy
+    - bot.strategies.disable  [Function]    disable a strategy
+    - bot.strategies.clear    [Function]    disable all strategies
+  - bot.users                 [Object]
+    - bot.users.list          [Function]    list users
+    - bot.users.get           [Function]    get a user's state by id
+    - bot.users.del           [Function]    delete a user
+    - bot.users.clear         [Function]    delete all users
+    - bot.users.new           [Function]    create a new user (you probably don't need this)
+  - bot.send                  [Function]    send a message to a user
+- togglePrintReceived         [Function]    toggle the printing to console of received messages
