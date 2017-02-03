@@ -3,10 +3,12 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [What the bot is this?](#what-the-bot-is-this)
 - [Terms](#terms)
     - [Provider](#provider)
 - [Usage](#usage)
+  - [Environment](#environment)
   - [Run your Tradle server](#run-your-tradle-server)
   - [Get started](#get-started)
   - [Console](#console)
@@ -15,6 +17,7 @@
   - [Strategies](#strategies)
   - [Managing users](#managing-users)
   - [Known Limitations](#known-limitations)
+  - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -60,6 +63,13 @@ These instructions have been tested on the following platforms:
 - macOS Sierra
 
 If you run into problems setting up, submit an issue!
+
+### Environment
+
+Prerequisites:
+- [Docker](https://docs.docker.com/engine/installation/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [Node.js](https://nodejs.org/en/) 6 or later
 
 ### Run your Tradle server
 
