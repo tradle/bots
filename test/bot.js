@@ -24,7 +24,7 @@ test('bot.send', co(function* (t) {
     })
   })
 
-  bot.once('sent', function () {
+  bot.once('send:success', function () {
     const { history } = bot.users.get('ted')
     t.same(history, [{ payload: expected }])
   })
@@ -54,7 +54,7 @@ test('bot.receive', co(function* (t) {
 }))
 
 test('bot.seal', co(function* (t) {
-  t.plan(1)
+  t.plan(4)
   t.timeoutAfter(500)
 
   const expected = crypto.randomBytes(32).toString('hex')
@@ -67,17 +67,25 @@ test('bot.seal', co(function* (t) {
   })
 
   const [pushed, wrote, read] = ['seal:push', 'seal:wrote', 'seal:read'].map(event => {
-    return new Promise(resolve => bot.once(event, resolve))
+    return new Promise(resolve => bot.seals.once(event, resolve))
   })
+
+  bot.seals.addOnReadHandler(co(function* ({ link }) {
+    t.equal(link, expected)
+  }))
+
+  bot.seals.addOnWroteHandler(co(function* ({ link }) {
+    t.equal(link, expected)
+  }))
 
   bot.seals.seal({ link: expected })
   yield pushed
 
-  bot.onwrote({ link: expected, txId: 'sometxid' })
+  bot.seals.onwrote({ link: expected, txId: 'sometxid' })
   yield wrote
 
   const sealData = { link: expected, txId: 'sometxid', confirmations: 10 }
-  bot.onread(sealData)
+  bot.seals.onread(sealData)
   yield read
 
   t.same(bot.seals.get(expected), sealData)

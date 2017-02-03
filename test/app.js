@@ -10,18 +10,27 @@ const {
   bigJsonParser
 } = require('../lib/utils')
 
-const TRADLE_SERVER_PORT = 27147
+let availablePort = 27147
 const PROVIDER_HANDLE = 'taxtime'
-const PROVIDER_URL = `http://localhost:${TRADLE_SERVER_PORT}/${PROVIDER_HANDLE}`
-const PORT = 27148
-const APP_URL = `http://localhost:${PORT}`
+
+function nextSettings () {
+  const app = { port: ++availablePort }
+  app.url = `http://localhost:${availablePort}`
+
+  const tradleServer = { port: ++availablePort }
+  tradleServer.providerURL = `http://localhost:${availablePort}/${PROVIDER_HANDLE}`
+
+  return { app, tradleServer }
+}
 
 test('send', co(function* (t) {
   t.timeoutAfter(500)
 
+  const settings = nextSettings()
+  console.log(settings)
   const { close, bot } = createApp({
-    port: PORT,
-    providerURL: PROVIDER_URL
+    port: settings.app.port,
+    providerURL: settings.tradleServer.providerURL
   })
 
   const payload = createSimpleMessage('hey')
@@ -47,10 +56,10 @@ test('send', co(function* (t) {
 
   let tradleServer
   yield new Promise(resolve => {
-    tradleServer = tradleServerApp.listen(TRADLE_SERVER_PORT, resolve)
+    tradleServer = tradleServerApp.listen(settings.tradleServer.port, resolve)
   })
 
-  bot.once('sent', function () {
+  bot.once('send:success', co(function* () {
     t.same(bot.users.list(), {
       ted: {
         id: 'ted',
@@ -60,7 +69,7 @@ test('send', co(function* (t) {
 
     close()
     t.end()
-  })
+  }))
 
   bot.send({ userId: 'ted', payload: 'hey' })
 }))
@@ -68,9 +77,10 @@ test('send', co(function* (t) {
 test('receive', co(function* (t) {
   t.timeoutAfter(500)
 
+  const settings = nextSettings()
   const { close, bot } = createApp({
-    port: PORT,
-    providerURL: PROVIDER_URL
+    port: settings.app.port,
+    providerURL: settings.tradleServer.providerURL
   })
 
   const payload = createSimpleMessage('hey')
@@ -91,7 +101,7 @@ test('receive', co(function* (t) {
   })
 
   yield request
-    .post(APP_URL)
+    .post(settings.app.url)
     .send({
       event: 'message',
       data: {
