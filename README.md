@@ -6,23 +6,23 @@
 
 - [What the bot is this?](#what-the-bot-is-this)
 - [Your bot, the Tradle server, and the clients](#your-bot-the-tradle-server-and-the-clients)
+- [Prerequisites](#prerequisites)
+  - [Platform](#platform)
+  - [Environment](#environment)
+  - [Tradle server docker image](#tradle-server-docker-image)
 - [Usage](#usage)
-  - [Prerequisites](#prerequisites)
-    - [Platform](#platform)
-    - [Environment](#environment)
-    - [Tradle Server docker image](#tradle-server-docker-image)
-  - [Run your Tradle server](#run-your-tradle-server)
-  - [Get started](#get-started)
-    - [Clone this repository](#clone-this-repository)
-    - [Install dependencies](#install-dependencies)
-    - [Configure](#configure)
+  - [Clone this repository](#clone-this-repository)
+  - [Install dependencies](#install-dependencies)
+  - [Run Tradle server](#run-tradle-server)
+  - [Create a provider](#create-a-provider)
+  - [Peek at the config](#peek-at-the-config)
   - [Console](#console)
     - [Sample Session](#sample-session)
     - [Console globals](#console-globals)
   - [Strategies](#strategies)
   - [Managing users](#managing-users)
-  - [Known Limitations](#known-limitations)
-  - [Contributing](#contributing)
+- [Known Limitations](#known-limitations)
+- [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -58,46 +58,72 @@ In the guide that follows, you'll set up a service provider called Get-a-Loan, a
 
 ![providers in Tradle app](./docs/providers.png "Providers as seen in the Tradle app")
 
-## Usage
-
-### Prerequisites
+## Prerequisites
 
 How can you have any pudding if you don't eat your prerequisites?
 
-#### Platform
+### Platform
 
 These instructions have been tested on the following platforms:
 - macOS Sierra
 
 If you run into problems setting up, submit an issue!
 
-#### Environment
+### Environment
+
+You will be using a dockerized Tradle server, and building your bots with Node.js
 
 - [Docker](https://docs.docker.com/engine/installation/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Node.js](https://nodejs.org/en/) 6 or later
 
-#### Get Tradle server docker image 
+### Tradle server docker image 
 
 You will need access to the [https://hub.docker.com/r/tradle/server-cli/](https://hub.docker.com/r/tradle/server-cli/) docker image. If when you click the above link, you see 404 Page Not Found, you're either not logged in or don't have access.
 
 Email [support@tradle.io](mailto:support@tradle.io) to request access.
 
-### Run Tradle server
+## Usage
 
-Note: you will be using [tradle-server-compose.yml](./tradle-server-compose.yml)
+### Clone this repository
 
 ```sh
-# enable connecting from the container to the host
+git clone https://github.com/tradle/bots tradle-bots
+cd tradle-bots
+```
+
+### Install dependencies
+
+Install dependencies by running `yarn` or `npm install`. [yarn](https://github.com/yarnpkg/yarn) is the faster, leaner, and more emoji-infused package manager on the block.
+
+### Run Tradle server
+
+This uses the Docker Compose file [tradle-server-compose.yml](./tradle-server-compose.yml), at the root of your `tradle-bots` folder:
+
+On OSX, to enable connecting from the container to the host, run:
+
+```sh
 # https://docs.docker.com/docker-for-mac/networking/#/known-limitations-use-cases-and-workarounds
 #   see: "I want to connect from a container to a service on the host"
-#   make sure your bot's web server is listening on the below IP (or on all ips: 0.0.0.0)
 sudo ifconfig lo0 alias 10.200.10.1/24
-# make sure docker is running
+```
+
+Create the necessary volumes, and launch!
+
+```sh
+# each of these lines should take a few seconds tops
+# if the console seems to hang, your docker daemon is unreachable
 docker volume create --name server-conf
 docker volume create --name server-storage
 # start up dockerized tradle server
 docker-compose -f tradle-server-compose.yml up -d
+```
+
+### Create a provider
+
+Let's create a provider called Get-a-Loan, with handle `loans` (url path: `/loans`), and one mortgage product.
+
+```sh
 docker attach tradle-server
 # you are now in the tradle server's command line client
 # let's create a provider
@@ -106,6 +132,8 @@ tradle-server$ newprovider loans "Get-a-Loan"
 # This may take a few seconds...
 # Enter a local path or a url of the provider logo:
 http://www.myiconfinder.com/uploads/iconsets/128-128-767de7a98f30bb81036e1829a50cfd06-float.png
+# enable a product (tradle.MortgageProduct is in the tradle/models repository)
+tradle-server$ enableproduct loans tradle.MortgageProduct
 # disable the Tradle server's in-house bot, which has its own complex agenda
 tradle-server$ silent loans
 # subscribe your bot's web server for webhooks
@@ -118,31 +146,15 @@ tradle-server$ newwebhook loans http://10.200.10.1:8000
 tradle-server$ restartproviders
 ```
 
-### Get started
+### Peek at the config
 
-The easiest way to get started is by playing in the Javascript console. Make sure your Tradle server us up and [running](#run-your-tradle-server). 
-
-#### Clone this repository
-
-```sh
-git clone https://github.com/tradle/bots tradle-bots
-cd tradle-bots
-```
-
-#### Install dependencies
-
-Install dependencies by running `yarn` or `npm install`. (yarn is the faster, leaner, new package manager on the block.)
-
-#### Configure
-
-As you can see in [sample-conf.json](./sample-conf.json), the sample implementations will look for a provider at `http://localhost:44444/loans`, where `http://localhost:44444` is your Tradle server url, and `loans` is the handle of the provider you just created [above](#run-your-tradle-server).
-
-[sample-conf.json](./sample-conf.json) has a sample config  
-[./cmd](./cmd.js) has a simple run script that starts the web server and the console. Modify to your needs.
+As you can see in [sample-conf.json](./sample-conf.json), the sample implementations will look for a provider at `http://localhost:44444/loans`, where `http://localhost:44444` is your Tradle server url, and `loans` is the handle of the provider you just created [above](#run-tradle-server).
 
 ### Console
 
-The console can be started by running [./cmd.js](./cmd.js). Here is a sample session in the console. Below it, see an outline of the objects available in the global scope.
+The easiest way to get started is by playing in the Javascript console. Make sure your Tradle server us up and [running](#run-tradle-server). 
+
+The console can be started by running `npm start`. Below is a sample session. Below that, see an outline of the objects and functions available in the global scope.
 
 #### Sample Session
 
@@ -230,16 +242,9 @@ Implementing a basic strategy for a bot is easy. See [./lib/strategy](./lib/stra
 // ./lib/strategy/echo.js
 
 function echoStrategy (bot) {
-  function onmessage ({ userId, payload }) {
-    bot.send({ userId, payload })
-  }
-
-  bot.on('message', onmessage)
-
-  // the strategy should return a function that disables itself
-  return function disable () {
-    bot.removeListener('message', onmessage)
-  }
+  return bot.addReceiveHandler(function onmessage ({ user, payload }) {
+    bot.send({ userId: user.id, payload })
+  })
 }
 ```
 
@@ -262,10 +267,10 @@ Users are automatically registered with a default state object when the first me
 
 When you `bot.send(...)` or when your bot receives messages, they get appended to `state.history`. You can store whatever your evil bot needs on the user state object, just don't forget to `bot.users.save(userState)` lest the evil be thwarted.
 
-### Known Limitations
+## Known Limitations
 
 - database: for simplicity and ease of getting started, the bot framework uses [lowdb](https://github.com/typicode/lowdb) for its databases. Yes, it's not a production-level database, it writes synchronously to the file-system, etc. Feel free to substitute it with your personal preference once you're past the prototype phase (e.g. the Tradle server uses LevelDB).
 
-### Contributing
+## Contributing
 
 Pull requests are welcome. If you build a strategy that you would like to share or show off, submit a pull request to add it to this README.
