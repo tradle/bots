@@ -4,12 +4,14 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [What the bot is this?](#what-the-bot-is-this)
+- [Terms](#terms)
+    - [Provider](#provider)
 - [Usage](#usage)
   - [Run your Tradle server](#run-your-tradle-server)
   - [Get started](#get-started)
-  - [REPL](#repl)
+  - [Console](#console)
     - [Sample Session](#sample-session)
-    - [REPL globals](#repl-globals)
+    - [Console globals](#console-globals)
   - [Strategies](#strategies)
   - [Managing users](#managing-users)
   - [Known Limitations](#known-limitations)
@@ -18,7 +20,7 @@
 
 ## What the bot is this?
 
-This is a bot framework and a set of sample bots, referred to as "strategies" from here on (see [./lib/strategy](./lib/strategy)) for interfacing with a provider running on a Tradle server
+This is a bot framework and a set of sample bots, referred to as "strategies" from here on (see [./lib/strategy](./lib/strategy)) for interfacing with a [provider](#provider) running on a Tradle server
 
 The Tradle server takes care of:
 - running the Tradle engine
@@ -35,6 +37,18 @@ This framework supports:
 - asynchronous messaging
 - reliable persistent-queue-based send/receive on both the server and the bot ends
 - easy to get started, see below sample strategy
+
+## Terms
+
+Dig up your old SAT hat.
+
+#### Provider
+
+A provider is your bot's sock puppet. Your bot is the puppetmaster. Your bot says jump, the provider jumps. Your bot says: "tell user XYZ that s/he looks fat in that hat, and then give them a million dollars" and the provider does it without question, so be careful. But seriously, the provider can't jump, it can only send and receive messages, and transact on the blockchain.
+
+For ease of testing and demoing, a Tradle server can run multiple service "providers". In the below Tradle app screenshot, you see two providers, Get-a-Loan and Easy Bank, which may or may not be running on one Tradle server.
+
+![providers in Tradle app](./docs/providers.png "Providers as seen in the Tradle app")
 
 ## Usage
 
@@ -74,14 +88,14 @@ tradle-server$ restartproviders
 
 ### Get started
 
-The easiest way to get started is by playing in the REPL (read-eval-print-loop). Make sure your Tradle server us up and [running](#run-your-tradle-server). As you can see in [sample-conf.json](./sample-conf.json), the sample implementations talk a provider that listens at `http://localhost:44444/loans`, where `http://localhost:44444` is your Tradle server url, and `loans` is the handle of the provider you created in the command line client, e.g. with `newprovider loans "A Good Loan Provider name"`
+The easiest way to get started is by playing in the Javascript console. Make sure your Tradle server us up and [running](#run-your-tradle-server). As you can see in [sample-conf.json](./sample-conf.json), the sample implementations talk a provider that listens at `http://localhost:44444/loans`, where `http://localhost:44444` is your Tradle server url, and `loans` is the handle of the provider you created in the command line client, e.g. with `newprovider loans "A Good Loan Provider name"`
 
 [sample-conf.json](./sample-conf.json) has a sample config  
-[./cmd](./cmd.js) has a simple run script that starts the web server and the REPL. Modify to your needs.
+[./cmd](./cmd.js) has a simple run script that starts the web server and the console. Modify to your needs.
 
-### REPL
+### Console
 
-Here is a sample session in the REPL. Below it, see an outline of the objects available in the global scope
+The console can be started by running [./cmd.js](./cmd.js). Here is a sample session in the console. Below it, see an outline of the objects available in the global scope.
 
 #### Sample Session
 
@@ -129,9 +143,9 @@ bot.send({ userId: 'a7d454a8ec9a1bd375f9dd16afdadff9ed8765a03016f6abf7dd10df0f7c
 bot.strategies.use(strategies.products)
 ```
 
-#### REPL globals
+#### Console globals
 
-as you can see in the session above, the REPL exposes a bunch of objects and functions in the global scope:
+as you can see in the session above, the console exposes a bunch of objects and functions in the global scope:
 
 ```
 - bot                         [Object]
@@ -177,7 +191,7 @@ See [./lib/strategy/silly.js](./lib/strategy/silly.js) for a slightly more compl
 
 ### Managing users
 
-`bot.users` is the user manager object, which you can explore in the [REPL](#repl)
+`bot.users` is the user manager object, which you can explore in the [console](#console). If you like mostly empty JSON objects, you're going to love this one.
 
 Each user has a single state object, which is accessible with `bot.users.get(userId)`
 
@@ -194,4 +208,4 @@ When you `bot.send(...)` or when your bot receives messages, they get appended t
 
 ### Known Limitations
 
-- database: for simplicity and ease of getting started, [lowdb](https://github.com/typicode/lowdb) is used. Yes, it's not a production-level database, and you should feel free to substitute it with your personal preference once you're past the prototype phase. The great thing about working with modern Javascript and Promises is that when you need to replace a synchronous operation with an asynchronous one, it's often just a `yield` away. `bot.users.save(userState)` becomes `yield bot.users.save(userState)` and (hopefully) not much else changes.
+- database: for simplicity and ease of getting started, the bot framework uses [lowdb](https://github.com/typicode/lowdb) for its databases. Yes, it's not a production-level database, it writes synchronously to the file-system, etc. Feel free to substitute it with your personal preference once you're past the prototype phase (e.g. the Tradle server uses LevelDB).
