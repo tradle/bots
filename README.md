@@ -52,6 +52,15 @@ For ease of testing and demoing, a Tradle server can run multiple service "provi
 
 ## Usage
 
+IMPORTANT: you will need access to the [https://hub.docker.com/r/tradle/server-cli/](https://hub.docker.com/r/tradle/server-cli/) docker image. 
+
+Email [support@tradle.io](mailto:support@tradle.io) to request access.
+
+These instructions have been tested on the following platforms:  
+- macOS Sierra
+
+If you run into problems setting up, submit an issue!
+
 ### Run your Tradle server
 
 This uses [tradle-server-compose.yml](./tradle-server-compose.yml)
@@ -168,7 +177,7 @@ as you can see in the session above, the console exposes a bunch of objects and 
 
 Yadda yadda, the examples were fun, now how do I build my own bot?
 
-Implementing a basic strategy for a bot is simple. See [./lib/strategy](./lib/strategy) for examples. Here's the echo strategy, which echoes everything any given user says back to them (and boy, do users love it):
+Implementing a basic strategy for a bot is easy. See [./lib/strategy](./lib/strategy) for examples. Here's the echo strategy, which echoes everything any given user says back to them (and boy, do users love it):
 
 ```js
 // ./lib/strategy/echo.js
@@ -187,7 +196,7 @@ function echoStrategy (bot) {
 }
 ```
 
-See [./lib/strategy/silly.js](./lib/strategy/silly.js) for a slightly more complex strategy, and [./lib/strategy/products.js](./lib/strategy/products.js) for an expert-system type strategy that is a pared down version of the Tradle server's in-house bot's strategy.
+[./lib/strategy/silly.js](./lib/strategy/silly.js) is a slightly more complex strategy, and [./lib/strategy/products.js](./lib/strategy/products.js) is an expert-system type strategy that is a pared down version of the Tradle server's in-house bot's strategy.
 
 ### Managing users
 
@@ -209,3 +218,7 @@ When you `bot.send(...)` or when your bot receives messages, they get appended t
 ### Known Limitations
 
 - database: for simplicity and ease of getting started, the bot framework uses [lowdb](https://github.com/typicode/lowdb) for its databases. Yes, it's not a production-level database, it writes synchronously to the file-system, etc. Feel free to substitute it with your personal preference once you're past the prototype phase (e.g. the Tradle server uses LevelDB).
+
+### Contributing
+
+Pull requests are welcome. If you build a strategy that you would like to share or show off, submit a pull request to add it to this README.
