@@ -1,10 +1,11 @@
+const crypto = require('crypto')
 const test = require('tape')
 const low = require('lowdb')
 const createBot = require('../lib/bot')
 const {
   co,
-  createSimpleMessage,
-  setDBSchema
+  Promise,
+  createSimpleMessage
 } = require('../lib/utils')
 
 const noop = function () {}
@@ -52,6 +53,33 @@ test('bot.receive', co(function* (t) {
   })
 }))
 
-function createDB() {
-  return setDBSchema(low())
-}
+test('bot.seal', co(function* (t) {
+  t.plan(1)
+  t.timeoutAfter(500)
+
+  const expected = crypto.randomBytes(32).toString('hex')
+  const bot = createBot({
+    send: noop,
+    seal: function ({ link }) {
+      t.equal(link, expected)
+      return Promise.resolve()
+    }
+  })
+
+  const [pushed, wrote, read] = ['seal:push', 'seal:wrote', 'seal:read'].map(event => {
+    return new Promise(resolve => bot.once(event, resolve))
+  })
+
+  bot.seals.seal({ link: expected })
+  yield pushed
+
+  bot.onwrote({ link: expected, txId: 'sometxid' })
+  yield wrote
+
+  const sealData = { link: expected, txId: 'sometxid', confirmations: 10 }
+  bot.onread(sealData)
+  yield read
+
+  t.same(bot.seals.get(expected), sealData)
+  t.end()
+}))
