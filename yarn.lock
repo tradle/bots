@@ -478,9 +478,9 @@ qs@6.2.1, qs@^6.1.0:
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.2.1.tgz#ce03c5ff0935bc1d9d69a9f14cbd18e568d67625"
 
-queuey@^1:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/queuey/-/queuey-1.1.0.tgz#fac4d1467655e694590b90024996ef2e65053640"
+queuey@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/queuey/-/queuey-1.2.1.tgz#f3a631c102d70c1c382d5a67810008c4dcbef99f"
   dependencies:
     bluebird "^3.4.7"
     lowdb "^0.14.0"
