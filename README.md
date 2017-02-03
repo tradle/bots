@@ -6,7 +6,7 @@
 
 - [What the bot is this?](#what-the-bot-is-this)
 - [Terms](#terms)
-    - [Provider](#provider)
+    - [Tradle server vs Service Providers](#tradle-server-vs-service-providers)
 - [Usage](#usage)
   - [Environment](#environment)
   - [Run your Tradle server](#run-your-tradle-server)
@@ -23,7 +23,7 @@
 
 ## What the bot is this?
 
-This is a bot framework and a set of sample bots, referred to as "strategies" from here on (see [./lib/strategy](./lib/strategy)) for interfacing with a [provider](#provider) running on a Tradle server
+This is a bot framework and a set of sample bots, referred to as "strategies" from here on for interfacing with a [provider](#provider) running on a Tradle server
 
 The Tradle server takes care of:
 - running the Tradle engine
@@ -43,15 +43,19 @@ This framework supports:
 
 ## Terms
 
-Dig up your old SAT hat.
+Dig up your old SAT hat
 
-#### Provider
+#### Tradle server vs Service Providers
 
-A provider is your bot's sock puppet. Your bot is the puppetmaster. Your bot says jump, the provider jumps. Your bot says: "tell user XYZ that s/he looks fat in that hat, and then give them a million dollars" and the provider does it without question, so be careful. But seriously, the provider can't jump, it can only send and receive messages, and transact on the blockchain.
+![communication diagram](./docs/diagram.png "communication diagram: bots, Tradle server, clients")
 
-For ease of testing and demoing, a Tradle server can run multiple service "providers". In the below Tradle app screenshot, you see two providers, Get-a-Loan and Easy Bank, which may or may not be running on one Tradle server.
+Between your bot and your clients on their Tradle apps sits the Tradle server, acting much like a router, if routers knew crypto and were cute as buttons.
+
+The Tradle server acts in some ways as a router between your bot and your clients using the Tradle app. In the below Tradle app screenshot, you see two service providers, Get-a-Loan and Easy Bank. You can't tell as a user, but these two providers share one Tradle server. Being able to set up multiple service providers on one Tradle server makes it easier to test and do demos.
 
 ![providers in Tradle app](./docs/providers.png "Providers as seen in the Tradle app")
+
+In the examples below, you'll set up a service provider called Get-a-Loan, and connect your bot to it.
 
 ## Usage
 
