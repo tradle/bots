@@ -18,6 +18,7 @@
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "queuey": "^1.2.1",
+    "safe-json-stringify": "^1.0.3",
     "superagent": "^3.4.1",
     "xtend": "^4.0.1"
   },
@@ -29,6 +30,9 @@
     "tape": "^4.6.3"
   },
   "scripts": {
-    "test": "tap `git ls-files test/*.js`"
+    "test": "tap `git ls-files test/*.js`",
+    "start": "DEBUG=tradle* ./cmd.js",
+    "debug": "DEBUG=tradle* node --debug --inspect ./cmd.js",
+    "debug-brk": "DEBUG=tradle* node --debug-brk --inspect ./cmd.js"
   }
 }

@@ -33,7 +33,7 @@ test('bot.send', co(function* (t) {
 }))
 
 test('bot.receive', co(function* (t) {
-  t.plan(1)
+  t.plan(2)
   t.timeoutAfter(500)
 
   const bot = createBot({
@@ -42,14 +42,29 @@ test('bot.receive', co(function* (t) {
 
   const payload = createSimpleMessage('hey')
   const message = { object: payload }
-  bot.addReceiveHandler(function () {
-    const { history } = bot.users.get('ted')
-    t.same(history, [{ payload, inbound: true }])
+
+  let i = 0
+  bot.addReceiveHandler(co(function* () {
+    if (i++ === 0) {
+      const { history } = bot.users.get('ted')
+      t.same(history, [{ payload, inbound: true }])
+    } else {
+      throw new Error('boo')
+    }
+  }))
+
+  bot.receive({
+    author: 'ted',
+    object: message
   })
 
   bot.receive({
     author: 'ted',
     object: message
+  })
+
+  bot.on('error', function (err) {
+    t.equal(err.action, 'receive')
   })
 }))
 

@@ -27,7 +27,6 @@ test('send', co(function* (t) {
   t.timeoutAfter(500)
 
   const settings = nextSettings()
-  console.log(settings)
   const { close, bot } = createApp({
     port: settings.app.port,
     providerURL: settings.tradleServer.providerURL

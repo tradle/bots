@@ -519,6 +519,10 @@ resumer@~0.0.0:
   dependencies:
     through "~2.3.4"
 
+safe-json-stringify@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/safe-json-stringify/-/safe-json-stringify-1.0.3.tgz#3cb6717660a086d07cb5bd9b7a6875bcf67bd05e"
+
 send@0.14.2:
   version "0.14.2"
   resolved "https://registry.yarnpkg.com/send/-/send-0.14.2.tgz#39b0438b3f510be5dc6f667a11f71689368cdeef"

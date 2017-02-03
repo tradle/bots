@@ -1,9 +1,7 @@
 
 const test = require('tape')
-const low = require('lowdb')
 const {
-  shallowClone,
-  setDBSchema
+  shallowClone
 } = require('../lib/utils')
 
 const manageUsers = require('../lib/users')

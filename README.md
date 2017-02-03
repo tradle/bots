@@ -119,7 +119,8 @@ The console can be started by running [./cmd.js](./cmd.js). Here is a sample ses
 #### Sample Session
 
 ```sh
-$ ./cmd.js
+# npm start runs ./cmd.js with lots of logging. See "scripts" in package.json
+$ npm start
 # Listening on port 8000
 # list stored users
 bot.users.list()
@@ -179,6 +180,14 @@ as you can see in the session above, the console exposes a bunch of objects and 
     - bot.users.del           [Function]    delete a user
     - bot.users.clear         [Function]    delete all users
     - bot.users.new           [Function]    create a new user (you probably don't need this)
+  - bot.seals                 [Object]
+    - bot.seals.list          [Function]    list seals
+    - bot.seals.get           [Function]    get a seal by an object link
+    - bot.seals.queued        [Function]    get queued seals
+  - bot.queued                [Object]
+    - bot.queued.seals        [Function]    list queued seals (same as bot.seals.queued())
+    - bot.queued.send         [Function]    list queued sends
+    - bot.queued.receive      [Function]    list queued receives
   - bot.send                  [Function]    send a message to a user
 - togglePrintReceived         [Function]    toggle the printing to console of received messages
 ```
