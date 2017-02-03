@@ -78,7 +78,7 @@ test('receive', co(function* (t) {
     object: payload
   }
 
-  bot.once('message', function () {
+  bot.addReceiveHandler(function () {
     t.same(bot.users.list(), {
       ted: {
         id: 'ted',

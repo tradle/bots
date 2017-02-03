@@ -41,7 +41,7 @@ test('bot.receive', co(function* (t) {
 
   const payload = createSimpleMessage('hey')
   const message = { object: payload }
-  bot.once('message', function () {
+  bot.addReceiveHandler(function () {
     const { history } = bot.users.get('ted')
     t.same(history, [{ payload, inbound: true }])
   })
