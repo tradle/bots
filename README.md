@@ -111,6 +111,8 @@ sudo ifconfig lo0 alias 10.200.10.1/24
 Create the necessary volumes, and launch!
 
 ```sh
+# switch to your tradle-bots directory
+# 
 # each of these lines should take a few seconds tops
 # if the console seems to hang, your docker daemon is unreachable
 docker volume create --name server-conf
@@ -124,7 +126,9 @@ docker-compose -f tradle-server-compose.yml up -d
 Let's create a provider called Get-a-Loan, with handle `loans` (url path: `/loans`), and one mortgage product.
 
 ```sh
+# attach to the tradle-server container
 docker attach tradle-server
+# ( you may need to hit Enter an extra time to show the prompt )
 # you are now in the tradle server's command line client
 # let's create a provider
 tradle-server$ newprovider loans "Get-a-Loan"
@@ -132,12 +136,10 @@ tradle-server$ newprovider loans "Get-a-Loan"
 # This may take a few seconds...
 # Enter a local path or a url of the provider logo:
 http://www.myiconfinder.com/uploads/iconsets/128-128-767de7a98f30bb81036e1829a50cfd06-float.png
-# enable a product (tradle.MortgageProduct is in the tradle/models repository)
-tradle-server$ enableproduct loans tradle.MortgageProduct
 # disable the Tradle server's in-house bot, which has its own complex agenda
 tradle-server$ silent loans
 # subscribe your bot's web server for webhooks
-# see beginning of this script for explanation for the IP address value
+# OSX: see the previous section for the explanation for the IP address value
 tradle-server$ newwebhook loans http://10.200.10.1:8000
 # if you want to play with the products strategy (./lib/strategy/products.js)
 # uncomment the next line:
@@ -159,6 +161,8 @@ The console can be started by running `npm start`. Below is a sample session. Be
 #### Sample Session
 
 ```sh
+# switch to your tradle-bots directory
+#
 # npm start runs ./cmd.js with lots of logging. See "scripts" in package.json
 $ npm start
 # Listening on port 8000
