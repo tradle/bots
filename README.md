@@ -5,12 +5,15 @@
 
 
 - [What the bot is this?](#what-the-bot-is-this)
-- [Terms](#terms)
-    - [Tradle server vs Service Providers](#tradle-server-vs-service-providers)
+- [Your bot, the Tradle server, and the clients](#your-bot-the-tradle-server-and-the-clients)
 - [Usage](#usage)
+  - [Docker Hub image](#docker-hub-image)
   - [Environment](#environment)
   - [Run your Tradle server](#run-your-tradle-server)
   - [Get started](#get-started)
+    - [Clone this repository](#clone-this-repository)
+    - [Install dependencies](#install-dependencies)
+    - [Configure](#configure)
   - [Console](#console)
     - [Sample Session](#sample-session)
     - [Console globals](#console-globals)
@@ -23,7 +26,7 @@
 
 ## What the bot is this?
 
-This is a bot framework and a set of sample bots, referred to as "strategies" from here on for interfacing with a [provider](#provider) running on a Tradle server
+This is a bot framework and a set of sample bots, referred to as "strategies" from here on for interfacing with a [provider](#your-bot-the-tradle-server-and-the-clients) running on a Tradle server
 
 The Tradle server takes care of:
 - running the Tradle engine
@@ -41,32 +44,25 @@ This framework supports:
 - reliable persistent-queue-based send/receive on both the server and the bot ends
 - easy to get started, see below sample strategy
 
-## Terms
-
-Dig up your old SAT hat
-
-#### Tradle server vs Service Providers
+## Your bot, the Tradle server, and the clients
 
 ![communication diagram](./docs/diagram.png "communication diagram: bots, Tradle server, clients")
 
-Between your bot and your clients on their Tradle apps sits the Tradle server, acting much like a router, if routers knew crypto and were cute as buttons.
+The Tradle server acts like a router between your bot and your clients, on their Tradle apps. Your bot will represent a single provider, as different providers typically require different functionality. Being able to set up multiple service providers on one Tradle server makes it easier to test and do demos.
 
-The Tradle server acts in some ways as a router between your bot and your clients using the Tradle app. In the below Tradle app screenshot, you see two service providers, Get-a-Loan and Easy Bank. You can't tell as a user, but these two providers share one Tradle server. Being able to set up multiple service providers on one Tradle server makes it easier to test and do demos.
+From the client's perspective (see the Tradle app screenshot below), providers are listed together in the Conversations screen.
+
+In the guide that follows, you'll set up a service provider called Get-a-Loan, and connect your bot to it.
 
 ![providers in Tradle app](./docs/providers.png "Providers as seen in the Tradle app")
 
-In the examples below, you'll set up a service provider called Get-a-Loan, and connect your bot to it.
-
 ## Usage
 
-IMPORTANT: you will need access to the [https://hub.docker.com/r/tradle/server-cli/](https://hub.docker.com/r/tradle/server-cli/) docker image. 
+### Docker Hub image 
+
+You will need access to the [https://hub.docker.com/r/tradle/server-cli/](https://hub.docker.com/r/tradle/server-cli/) docker image. If when you click the above link, you see 404 Page Not Found, you're either not logged in or don't have access.
 
 Email [support@tradle.io](mailto:support@tradle.io) to request access.
-
-These instructions have been tested on the following platforms:  
-- macOS Sierra
-
-If you run into problems setting up, submit an issue!
 
 ### Environment
 
@@ -75,9 +71,14 @@ Prerequisites:
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Node.js](https://nodejs.org/en/) 6 or later
 
+These instructions have been tested on the following platforms:  
+- macOS Sierra
+
+If you run into problems setting up, submit an issue!
+
 ### Run your Tradle server
 
-This uses [tradle-server-compose.yml](./tradle-server-compose.yml)
+Note: you will be using [tradle-server-compose.yml](./tradle-server-compose.yml)
 
 ```sh
 # enable connecting from the container to the host
@@ -85,6 +86,7 @@ This uses [tradle-server-compose.yml](./tradle-server-compose.yml)
 #   see: "I want to connect from a container to a service on the host"
 #   make sure your bot's web server is listening on the below IP (or on all ips: 0.0.0.0)
 sudo ifconfig lo0 alias 10.200.10.1/24
+# make sure docker is running
 docker volume create --name server-conf
 docker volume create --name server-storage
 # start up dockerized tradle server
@@ -111,7 +113,22 @@ tradle-server$ restartproviders
 
 ### Get started
 
-The easiest way to get started is by playing in the Javascript console. Make sure your Tradle server us up and [running](#run-your-tradle-server). As you can see in [sample-conf.json](./sample-conf.json), the sample implementations talk a provider that listens at `http://localhost:44444/loans`, where `http://localhost:44444` is your Tradle server url, and `loans` is the handle of the provider you created in the command line client, e.g. with `newprovider loans "A Good Loan Provider name"`
+The easiest way to get started is by playing in the Javascript console. Make sure your Tradle server us up and [running](#run-your-tradle-server). 
+
+#### Clone this repository
+
+```sh
+git clone https://github.com/tradle/bots tradle-bots
+cd tradle-bots
+```
+
+#### Install dependencies
+
+Install dependencies by running `yarn` or `npm install`. (yarn is the faster, leaner, new package manager on the block.)
+
+#### Configure
+
+As you can see in [sample-conf.json](./sample-conf.json), the sample implementations will look for a provider at `http://localhost:44444/loans`, where `http://localhost:44444` is your Tradle server url, and `loans` is the handle of the provider you just created [above](#run-your-tradle-server).
 
 [sample-conf.json](./sample-conf.json) has a sample config  
 [./cmd](./cmd.js) has a simple run script that starts the web server and the console. Modify to your needs.
@@ -151,7 +168,7 @@ togglePrintReceived()
 }
 # list stored users
 bot.users.list()
-# ok, this is that guy who was messaging us earlier
+# ok, this is that person that was messaging us earlier
 # { a7d454a8ec9a1bd375f9dd16afdadff9ed8765a03016f6abf7dd10df0f7c8fbe: 
 #   { id: 'a7d454a8ec9a1bd375f9dd16afdadff9ed8765a03016f6abf7dd10df0f7c8fbe',
 #     history: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
