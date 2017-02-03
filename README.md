@@ -7,8 +7,10 @@
 - [What the bot is this?](#what-the-bot-is-this)
 - [Your bot, the Tradle server, and the clients](#your-bot-the-tradle-server-and-the-clients)
 - [Usage](#usage)
-  - [Docker Hub image](#docker-hub-image)
-  - [Environment](#environment)
+  - [Prerequisites](#prerequisites)
+    - [Platform](#platform)
+    - [Environment](#environment)
+    - [Tradle Server docker image](#tradle-server-docker-image)
   - [Run your Tradle server](#run-your-tradle-server)
   - [Get started](#get-started)
     - [Clone this repository](#clone-this-repository)
@@ -58,25 +60,30 @@ In the guide that follows, you'll set up a service provider called Get-a-Loan, a
 
 ## Usage
 
-### Docker Hub image 
+### Prerequisites
+
+How can you have any pudding if you don't eat your prerequisites?
+
+#### Platform
+
+These instructions have been tested on the following platforms:
+- macOS Sierra
+
+If you run into problems setting up, submit an issue!
+
+#### Environment
+
+- [Docker](https://docs.docker.com/engine/installation/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [Node.js](https://nodejs.org/en/) 6 or later
+
+#### Get Tradle server docker image 
 
 You will need access to the [https://hub.docker.com/r/tradle/server-cli/](https://hub.docker.com/r/tradle/server-cli/) docker image. If when you click the above link, you see 404 Page Not Found, you're either not logged in or don't have access.
 
 Email [support@tradle.io](mailto:support@tradle.io) to request access.
 
-### Environment
-
-Prerequisites:
-- [Docker](https://docs.docker.com/engine/installation/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
-- [Node.js](https://nodejs.org/en/) 6 or later
-
-These instructions have been tested on the following platforms:  
-- macOS Sierra
-
-If you run into problems setting up, submit an issue!
-
-### Run your Tradle server
+### Run Tradle server
 
 Note: you will be using [tradle-server-compose.yml](./tradle-server-compose.yml)
 
