@@ -10,7 +10,8 @@ const argv = require('minimist')(process.argv.slice(2), {
 })
 
 const conf = require(argv.conf)
-const { bot } = require('./lib/app')(conf)
+const app = require('./lib/app')(conf)
+const { bot } = app
 
 console.log('Listening on port ' + conf.port)
 
@@ -23,5 +24,5 @@ if (conf.strategies) {
 if (String(conf.repl) !== 'false') {
   const pepperIcon = '\uD83C\uDF36  '
   const prompt = typeof conf.repl === 'string' ? conf.repl : pepperIcon
-  require('./lib/repl')({ prompt, bot })
+  require('./lib/repl')({ prompt, app })
 }

@@ -166,6 +166,11 @@ The console can be started by running `npm start`. Below is a sample session. Be
 # npm start runs ./cmd.js with lots of logging. See "scripts" in package.json
 $ npm start
 # Listening on port 8000
+# 
+# before anything test the connection to your provider:
+health()
+testing connection to provider...
+all good!
 # list stored users
 bot.users.list()
 # no users yet
@@ -212,6 +217,8 @@ bot.strategies.use(strategies.products)
 as you can see in the session above, the console exposes a bunch of objects and functions in the global scope:
 
 ```
+- health                      [Function]    test the connection to your provider
+- togglePrintReceived         [Function]    toggle the printing to console of received messages
 - bot                         [Object]
   - bot.strategies            [Object]
     - bot.strategies.list     [Function]    list enabled strategies
@@ -233,7 +240,6 @@ as you can see in the session above, the console exposes a bunch of objects and 
     - bot.queued.send         [Function]    list queued sends
     - bot.queued.receive      [Function]    list queued receives
   - bot.send                  [Function]    send a message to a user
-- togglePrintReceived         [Function]    toggle the printing to console of received messages
 ```
 
 ### Strategies
@@ -247,7 +253,9 @@ Implementing a basic strategy for a bot is easy. See [./lib/strategy](./lib/stra
 const { co } = require('bluebird').coroutine
 
 module.exports = function echoStrategy (bot) {
-  return bot.addReceiveHandler(co(function* onmessage ({ user, object, link }) {
+  return bot.addReceiveHandler(co(function* ({ user, object, link /*, other goodies*/ }) {
+    // we received `object`
+    // send it back
     yield bot.send({ userId: user.id, object })
   }))
 }
@@ -263,7 +271,7 @@ To handle incoming messages from users, add a receive handler as follows:
 
 ```js
 function myStrategy (bot) {
-  bot.addReceiveHandler(function ({ user, object /*, other goodies*/ }) {
+  bot.addReceiveHandler(function ({ user, object, link /*, other goodies*/ }) {
     // return a Promise to ensure receive order
   })
 
@@ -308,7 +316,7 @@ Objects sent to a user, or received from a user can be sealed on blockchain as f
 
 ```js
 function echoAndSealStrategy (bot) {
-  return bot.addReceiveHandler(co(function* onmessage ({ user, object, link }) {
+  return bot.addReceiveHandler(co(function* ({ user, object, link /*, other goodies*/ }) {
     yield bot.send({ userId: user.id, object })
     yield bot.seal({ link })
   }))
