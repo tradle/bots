@@ -244,13 +244,17 @@ Implementing a basic strategy for a bot is easy. See [./lib/strategy](./lib/stra
 
 ```js
 // ./lib/strategy/echo.js
+const { co } = require('bluebird').coroutine
 
-function echoStrategy (bot) {
-  return bot.addReceiveHandler(function onmessage ({ user, object }) {
-    bot.send({ userId: user.id, object })
-  })
+module.exports = function echoStrategy (bot) {
+  return bot.addReceiveHandler(co(function* onmessage ({ user, object, link }) {
+    yield bot.send({ userId: user.id, object })
+    // return a Promise to ensure receive order
+  }))
 }
 ```
+
+If your Promises are a bit rusty, or if you're asking yourself "what's `co`?", skim [this](./docs/promises.md)
 
 [./lib/strategy/silly.js](./lib/strategy/silly.js) is a slightly more complex strategy, and [./lib/strategy/products.js](./lib/strategy/products.js) is an expert-system type strategy that is a pared down version of the Tradle server's in-house bot's strategy.
 
@@ -261,9 +265,11 @@ To handle incoming messages from users, add a receive handler as follows:
 ```js
 
 function myStrategy (bot) {
-  bot.addReceiveHandler(function ({ user, object}) {
+  bot.addReceiveHandler(function ({ user, object /*, other goodies*/ }) {
     // `user` is the user state object
     // `object` is the object sent by the user
+    // 
+    // return a Promise to ensure receive order
   })
 
   // ...
@@ -277,10 +283,16 @@ To send a message to a user, use `bot.send({ userId, object })`:
 ```js
 
 function myStrategy (bot) {
+  // const news = ...
   // ...
-  bot.send({ 
-    userId: String, 
-    object: Object
+  news.on('raining men', function () {
+    bot.send({ 
+      userId: String, 
+      object: {
+        _t: 'tradle.SimpleMessage'
+        message: 'wear a helmet'
+      }
+    })
   })
   // ...
 }
@@ -291,13 +303,36 @@ function myStrategy (bot) {
 Objects sent to a user, or received from a user can be sealed on blockchain as follows. To seal an object, you need to know its `link`, which 
 
 ```js
-
 function echoAndSealStrategy (bot) {
-  return bot.addReceiveHandler(function onmessage ({ user, object }) {
-    bot.send({ userId: user.id, object })
-  })
+  return bot.addReceiveHandler(co(function* onmessage ({ user, object, link }) {
+    yield bot.send({ userId: user.id, object })
+    yield bot.seal({ link })
+    // return a Promise to ensure receive order
+  }))
 }
 ```
+
+#### Events
+
+the `bot.users` object emits the following events:
+
+- 'create': a new user state object has been created
+- 'delete': a user state object has been deleted
+- 'clear': all user state has been deleted
+- 'update': a user state object has changed
+
+the `bot.seals` object emits the following events:
+
+- 'push': a request to seal an object has been pushed to the Tradle server
+- 'wrote': the Tradle server has written a seal to the blockchain
+- 'read': the Tradle server has read a seal for an object from the blockchain
+
+the `bot` object emits the following events:
+
+- 'message': when a message has been handled by all enabled strategies without error
+- 'sent': when a message has been sent to the Tradle server for deliver to the client
+- 'seal:push', 'seal:wrote', 'seal:read': re-emitted for convenience from `bot.seals`
+- 'user:create', 'user:delete', 'user:clear', 'user:update': re-emitted for convenience from `bot.users`
 
 ### Managing users
 

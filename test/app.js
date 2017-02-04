@@ -50,7 +50,6 @@ test('send', co(function* (t) {
     })
 
     res.json(resp)
-    tradleServer.close()
   })
 
   tradleServerApp.use(function (err, req, res) {
@@ -71,6 +70,7 @@ test('send', co(function* (t) {
       }
     })
 
+    tradleServer.close()
     close()
     t.end()
   }))

@@ -60,7 +60,7 @@ test('bot.receive', co(function* (t) {
         }, wrapper)
       ])
     } else {
-      throw new Error('boo')
+      throw new Error('this error is expected, move along')
     }
   }))
 
@@ -85,7 +85,7 @@ test('bot.seal', co(function* (t) {
   })
 
   const [pushed, wrote, read] = ['seal:push', 'seal:wrote', 'seal:read'].map(event => {
-    return new Promise(resolve => bot.seals.once(event, resolve))
+    return new Promise(resolve => bot.once(event, resolve))
   })
 
   bot.seals.addOnReadHandler(co(function* ({ link }) {
