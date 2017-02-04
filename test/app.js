@@ -7,7 +7,8 @@ const {
   co,
   createSimpleMessage,
   setDBSchema,
-  bigJsonParser
+  bigJsonParser,
+  shallowExtend
 } = require('../lib/utils')
 
 let availablePort = 27147
@@ -32,19 +33,23 @@ test('send', co(function* (t) {
     providerURL: settings.tradleServer.providerURL
   })
 
-  const payload = createSimpleMessage('hey')
-  const message = {
-    object: payload
+  const object = createSimpleMessage('hey')
+  const message = { object }
+  const tradleServerApp = express()
+  const resp = {
+    _s: 'some sig',
+    object: {
+      object: shallowExtend({ _s: 'some other sig' }, object)
+    }
   }
 
-  const tradleServerApp = express()
   tradleServerApp.post(`/${PROVIDER_HANDLE}/message`, bigJsonParser(), function (req, res) {
     t.same(req.body, {
       to: 'ted',
-      object: payload
+      object
     })
 
-    res.end()
+    res.json(resp)
     tradleServer.close()
   })
 
@@ -58,11 +63,11 @@ test('send', co(function* (t) {
     tradleServer = tradleServerApp.listen(settings.tradleServer.port, resolve)
   })
 
-  bot.once('send:success', co(function* () {
+  bot.once('sent', co(function* () {
     t.same(bot.users.list(), {
       ted: {
         id: 'ted',
-        history: [{ payload }]
+        history: [resp]
       }
     })
 
@@ -70,7 +75,7 @@ test('send', co(function* (t) {
     t.end()
   }))
 
-  bot.send({ userId: 'ted', payload: 'hey' })
+  bot.send({ userId: 'ted', object: 'hey' })
 }))
 
 test('receive', co(function* (t) {
@@ -82,16 +87,22 @@ test('receive', co(function* (t) {
     providerURL: settings.tradleServer.providerURL
   })
 
-  const payload = createSimpleMessage('hey')
+  const object = createSimpleMessage('hey')
   const message = {
-    object: payload
+    object: object
+  }
+
+  const wrapper = {
+    author: 'ted',
+    object: message,
+    objectinfo: { link: 'something' }
   }
 
   bot.addReceiveHandler(function () {
     t.same(bot.users.list(), {
       ted: {
         id: 'ted',
-        history: [{ payload, inbound: true }]
+        history: [shallowExtend({ inbound: true }, wrapper)]
       }
     })
 
@@ -103,9 +114,6 @@ test('receive', co(function* (t) {
     .post(settings.app.url)
     .send({
       event: 'message',
-      data: {
-        author: 'ted',
-        object: message
-      }
+      data: wrapper
     })
 }))

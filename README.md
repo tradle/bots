@@ -202,7 +202,7 @@ bot.users.list()
 #     profile: { firstName: 'Ove' } } }
 # ok, this is the guy who was messaging us earlier
 # let's say hi
-bot.send({ userId: 'a7d454a8ec9a1bd375f9dd16afdadff9ed8765a03016f6abf7dd10df0f7c8fbe', payload: 'hey Ove!' })
+bot.send({ userId: 'a7d454a8ec9a1bd375f9dd16afdadff9ed8765a03016f6abf7dd10df0f7c8fbe', object: 'hey Ove!' })
 # ok, good chat, let's turn the products strategy back on
 bot.strategies.use(strategies.products)
 ```
@@ -240,19 +240,64 @@ as you can see in the session above, the console exposes a bunch of objects and 
 
 Yadda yadda, the examples were fun, now how do I build my own bot?
 
-Implementing a basic strategy for a bot is easy. See [./lib/strategy](./lib/strategy) for examples. Here's the echo strategy, which echoes everything any given user says back to them (and boy, do users love it):
+Implementing a basic strategy for a bot is easy. See [./lib/strategy](./lib/strategy) for examples. Below is the echo strategy, which echoes everything any given user says back to them (and boy, do users love it).
 
 ```js
 // ./lib/strategy/echo.js
 
 function echoStrategy (bot) {
-  return bot.addReceiveHandler(function onmessage ({ user, payload }) {
-    bot.send({ userId: user.id, payload })
+  return bot.addReceiveHandler(function onmessage ({ user, object }) {
+    bot.send({ userId: user.id, object })
   })
 }
 ```
 
 [./lib/strategy/silly.js](./lib/strategy/silly.js) is a slightly more complex strategy, and [./lib/strategy/products.js](./lib/strategy/products.js) is an expert-system type strategy that is a pared down version of the Tradle server's in-house bot's strategy.
+
+#### Receiving messages
+
+To handle incoming messages from users, add a receive handler as follows:
+
+```js
+
+function myStrategy (bot) {
+  bot.addReceiveHandler(function ({ user, object}) {
+    // `user` is the user state object
+    // `object` is the object sent by the user
+  })
+
+  // ...
+}
+```
+
+#### Sending messages
+
+To send a message to a user, use `bot.send({ userId, object })`:
+
+```js
+
+function myStrategy (bot) {
+  // ...
+  bot.send({ 
+    userId: String, 
+    object: Object
+  })
+  // ...
+}
+```
+
+#### Creating blockchain seals
+
+Objects sent to a user, or received from a user can be sealed on blockchain as follows. To seal an object, you need to know its `link`, which 
+
+```js
+
+function echoAndSealStrategy (bot) {
+  return bot.addReceiveHandler(function onmessage ({ user, object }) {
+    bot.send({ userId: user.id, object })
+  })
+}
+```
 
 ### Managing users
 

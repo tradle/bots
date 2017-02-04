@@ -5,7 +5,8 @@ const createBot = require('../lib/bot')
 const {
   co,
   Promise,
-  createSimpleMessage
+  createSimpleMessage,
+  shallowExtend
 } = require('../lib/utils')
 
 const noop = function () {}
@@ -18,18 +19,19 @@ test('bot.send', co(function* (t) {
   const expected = createSimpleMessage(text)
   const expectedTo = 'ted'
   const bot = createBot({
-    send: co(function* send ({ userId, payload }) {
+    send: co(function* send ({ userId, object }) {
       t.equal(userId, expectedTo)
-      t.same(payload, expected)
+      t.same(object, expected)
+      return { object }
     })
   })
 
-  bot.once('send:success', function () {
+  bot.once('sent', function () {
     const { history } = bot.users.get('ted')
-    t.same(history, [{ payload: expected }])
+    t.same(history, [{ object: expected }])
   })
 
-  bot.send({ userId: expectedTo, payload: text })
+  bot.send({ userId: expectedTo, object: text })
 }))
 
 test('bot.receive', co(function* (t) {
@@ -40,29 +42,30 @@ test('bot.receive', co(function* (t) {
     send: noop
   })
 
-  const payload = createSimpleMessage('hey')
-  const message = { object: payload }
+  const object = createSimpleMessage('hey')
+  const message = { object: object }
+  const wrapper = {
+    author: 'ted',
+    object: message,
+    objectinfo: { link: 'something' }
+  }
 
   let i = 0
   bot.addReceiveHandler(co(function* () {
     if (i++ === 0) {
       const { history } = bot.users.get('ted')
-      t.same(history, [{ payload, inbound: true }])
+      t.same(history, [
+        shallowExtend({
+          inbound: true
+        }, wrapper)
+      ])
     } else {
       throw new Error('boo')
     }
   }))
 
-  bot.receive({
-    author: 'ted',
-    object: message
-  })
-
-  bot.receive({
-    author: 'ted',
-    object: message
-  })
-
+  bot.receive(wrapper)
+  bot.receive(wrapper)
   bot.on('error', function (err) {
     t.equal(err.action, 'receive')
   })
