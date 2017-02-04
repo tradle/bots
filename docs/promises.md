@@ -39,7 +39,7 @@ function doChores () {
 }
 ```
 
-This can still be a pain because you can't use if/else try/catch, and other control flow logic to perform asynchronous tasks without peppering `then()/catch()` everywhere and losing scope. Luckily, until the holy grail of `async/await` gets support in all environments, you can use [bluebird](https://github.com/petkaantonov/bluebird)'s coroutine method or the [co](https://github.com/tj/co) library to turn the previous code into this:
+This can still be a pain because you can't use if/else try/catch, and other control flow logic to perform asynchronous tasks without peppering `then()/catch()` everywhere and losing scope and continuity of logic. Luckily, until the holy grail of `async/await` gets support in all environments, you can use [bluebird](https://github.com/petkaantonov/bluebird)'s coroutine method or the [co](https://github.com/tj/co) library to turn the previous code into this:
 
 ```js
 const co = require('bluebird').coroutine
@@ -51,11 +51,12 @@ const doChores = co(function* doChores () {}
 })
 ```
 
-This is awesome! You're running asynchronous code without breaking your code logic. You can use regular try/catch, regular if/else, regular loops, etc.:
+Now *this* is awesome! You're running asynchronous code without breaking your code's logic. You can use regular try/catch, regular if/else, regular loops, etc.:
 
 ```js
 co(function* () {
   for (var i = 0; i < 10; i++) {
+    // make those odd numbers wait
     if (i % 2) yield wait(100)
   }
 

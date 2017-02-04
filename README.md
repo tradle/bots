@@ -79,9 +79,8 @@ You will be using a dockerized Tradle server, and building your bots with Node.j
 
 ### Tradle server docker image 
 
-You will need access to the [https://hub.docker.com/r/tradle/server-cli/](https://hub.docker.com/r/tradle/server-cli/) docker image. If when you click the above link, you see 404 Page Not Found, you're either not logged in or don't have access.
-
-Email [support@tradle.io](mailto:support@tradle.io) to request access.
+1. Create an account on Docker Hub 
+2. Email [support@tradle.io](mailto:support@tradle.io) to request access to the [https://hub.docker.com/r/tradle/server-cli/](https://hub.docker.com/r/tradle/server-cli/) docker image. Be sure to include your Docker Hub handle in the email. If, when you click the above link, you see 404 Page Not Found, you're either not logged in or don't have access.
 
 ## Usage
 
