@@ -249,12 +249,11 @@ const { co } = require('bluebird').coroutine
 module.exports = function echoStrategy (bot) {
   return bot.addReceiveHandler(co(function* onmessage ({ user, object, link }) {
     yield bot.send({ userId: user.id, object })
-    // return a Promise to ensure receive order
   }))
 }
 ```
 
-If your Promises are a bit rusty, or if you're asking yourself "what's `co`?", skim [this](./docs/promises.md)
+If your Promises are a bit rusty, or if you're asking yourself "what's `co`?" or "isn't `yield` only for generators?", skim [this](./docs/promises.md)
 
 [./lib/strategy/silly.js](./lib/strategy/silly.js) is a slightly more complex strategy, and [./lib/strategy/products.js](./lib/strategy/products.js) is an expert-system type strategy that is a pared down version of the Tradle server's in-house bot's strategy.
 
@@ -263,16 +262,18 @@ If your Promises are a bit rusty, or if you're asking yourself "what's `co`?", s
 To handle incoming messages from users, add a receive handler as follows:
 
 ```js
-
 function myStrategy (bot) {
   bot.addReceiveHandler(function ({ user, object /*, other goodies*/ }) {
-    // `user` is the user state object
-    // `object` is the object sent by the user
-    // 
     // return a Promise to ensure receive order
   })
 
-  // ...
+  // tip: wrap in `co` to make your async javascript saner:
+  // 
+  // const co = require('bluebird').coroutine
+  // bot.addReceiveHandler(co(function* ({ user, object /*, other goodies*/ }) {
+  //   yield promiseSomething()
+  //   yield promiseSomethingElse()
+  // }))
 }
 ```
 
@@ -286,12 +287,15 @@ function myStrategy (bot) {
   // const news = ...
   // ...
   news.on('raining men', function () {
+    // bot.send(...) returns a Promise. Sensing a theme?
     bot.send({ 
       userId: String, 
       object: {
         _t: 'tradle.SimpleMessage'
         message: 'wear a helmet'
       }
+      // equivalent shorthand for sending simple messages:
+      // object: 'wear a helmet'
     })
   })
   // ...
@@ -307,7 +311,6 @@ function echoAndSealStrategy (bot) {
   return bot.addReceiveHandler(co(function* onmessage ({ user, object, link }) {
     yield bot.send({ userId: user.id, object })
     yield bot.seal({ link })
-    // return a Promise to ensure receive order
   }))
 }
 ```
