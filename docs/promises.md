@@ -2,7 +2,7 @@
 
 if you're completely unfamiliar with Promises, there's a million decent intros online, e.g.:
 
-https://github.com/mattdesl/promise-cookbook
+https://github.com/mattdesl/promise-cookbook  
 https://developers.google.com/web/fundamentals/getting-started/primers/promises
 
 but in short, Promises let you turn asynchronous code like this...
