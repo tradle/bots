@@ -69,4 +69,6 @@ co(function* () {
 function wait (millis) {
   return new Promise(resolve => setTimeout(resolve, millis))
 }
-``` 
+```
+
+Note: a function constructed with `co` returns a Promise no matter what's inside it
