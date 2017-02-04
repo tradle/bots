@@ -4,6 +4,6 @@
   "providerURL": "http://localhost:44444/loans",
   "dir": "./storage",
   "strategies": [
-    "./lib/strategy/echo.js"
+    "./lib/strategy/silly.js"
   ]
 }
