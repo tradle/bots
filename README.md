@@ -18,6 +18,7 @@
     - [with yarn](#with-yarn)
   - [Run Tradle server](#run-tradle-server)
   - [Create a provider](#create-a-provider)
+  - [Connect your Tradle app](#connect-your-tradle-app)
   - [Peek at the config](#peek-at-the-config)
   - [Console](#console)
     - [Sample Session](#sample-session)
@@ -175,6 +176,14 @@ tradle-server$ newwebhook loans http://10.200.10.1:8000
 tradle-server$ restartproviders
 ```
 
+Note: when attached to a Docker container, if you hit Ctrl+C, you will kill it. Docker Compose will automatically restart it (see the `restart: always` flag in [tradle-server-compose.yml](./tradle-server-compose.yml)), but to be nice, detach with `Ctrl+P Ctrl+Q`
+
+### Connect your Tradle app
+
+1. If you're using the Tradle mobile app, make sure your phone is on the same network as the computer running your Tradle server.
+2. Get your computer's local ip.
+3. In your Tradle app, on the Conversations screen, click the red button, and choose Add Server URL. Enter the address of your Tradle server: `http://{your_local_ip}:44444`
+
 ### Peek at the config
 
 As you can see in [sample-conf.json](./sample-conf.json), the sample implementations will look for a provider at `http://localhost:44444/loans`, where `http://localhost:44444` is your Tradle server url, and `loans` is the handle of the provider you just created [above](#run-tradle-server).
@@ -204,15 +213,16 @@ bot.users.list()
 {}
 # list our strategies
 bot.strategies.list()
-# we're using the products strategy (see './lib/strategy/products.js')
-[ [Function: productsStrategy] ]
+# we're using the silly strategy (see './lib/strategy/silly.js')
+# depending on your config (sample-conf.json), you may be using a different one
+[ [Function: sillyStrategy] ]
 # screw that for now, we want to talk to our users manually
 bot.strategies.clear()
 bot.strategies.list()
 []
 # print to console all received message
 togglePrintReceived()
-# go to your Tradle app and say something to provider your bot's hooked up to
+# go to your Tradle app and say something to the provider your bot's hooked up to
 # ..yay, we got a message
 #  a7d454a8ec9a1bd375f9dd16afdadff9ed8765a03016f6abf7dd10df0f7c8fbe {
 #  "_s": "CkkKBHAyNTYSQQQkBY3Zz1lTCpyGK4aQzW8mzp8cz7KuvP0U9Km8vddXuL8PFnHpeFN60seFpmvGTAmy0hpA4hg/zQVsYXc2h8kIEkcwRQIgdQy4DkLs3AcYZ+LsbZvEyGNbuLzuyNHri1kWuvN3Su8CIQC6TwkhBqyJn+QG5gUFFFmnxZS+iI0OJ2yQIB4I2dGhbA==",
