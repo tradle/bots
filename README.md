@@ -243,10 +243,12 @@ bot.users.list()
 #     importedVerifications: [],
 #     profile: { firstName: 'Ove' } } }
 # ok, this is the guy who was messaging us earlier
-# let's say hi
+# let's say hi (make sure to replace a7d4... with the 'id' that bot.users.list() printed out)
 bot.send({ userId: 'a7d454a8ec9a1bd375f9dd16afdadff9ed8765a03016f6abf7dd10df0f7c8fbe', object: 'hey Ove!' })
-# ok, good chat, let's turn the products strategy back on
-bot.strategies.use(strategies.products)
+# ok, good chat, let's turn the Silly strategy back on. 
+# Silly will send a message to the app, and you can chat with Silly, 
+# but do not expect any serious stuff, be silly yourself
+bot.strategies.use(strategies.silly)
 ```
 
 #### Console globals
