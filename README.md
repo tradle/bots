@@ -85,7 +85,7 @@ If you run into problems setting up, submit an issue!
 
 You will be using a dockerized Tradle server, and building your bots with Node.js
 
-- [Docker](https://docs.docker.com/engine/installation/). Note that on Windwos 10 Home Edition you will need to install Docker Toolbox instead of Docker.
+- [Docker](https://docs.docker.com/engine/installation/). On Windwos 10 Home Edition you will need to install Docker Toolbox instead of Docker. Follow the Docker link, find Windows installaton page and search for Toolbox.
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Node.js](https://nodejs.org/en/) 6 or later
 
