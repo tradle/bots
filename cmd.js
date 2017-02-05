@@ -1,5 +1,13 @@
 #!/usr/bin/env node
 
+try {
+  const SegfaultHandler = require('segfault-handler')
+  SegfaultHandler.registerHandler("crash.log")
+} catch (err) {}
+
+// load .env
+require('dotenv').config()
+
 const argv = require('minimist')(process.argv.slice(2), {
   alias: {
     c: 'conf',
