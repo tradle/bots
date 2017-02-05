@@ -138,6 +138,7 @@ On OSX, to enable connecting from the container to the host, run:
 # https://docs.docker.com/docker-for-mac/networking/#/known-limitations-use-cases-and-workarounds
 #   see: "I want to connect from a container to a service on the host"
 sudo ifconfig lo0 alias 10.200.10.1/24
+# on Windows we do not know yet how to achieve the same, so instead of connecting to Tradle server using localhost, you will need to use the IP address printed in console by docker. On our machine it was 192.168.99.100
 ```
 
 Create the necessary volumes, and launch!
