@@ -2,7 +2,7 @@
   "port": 8000,
   "repl": "\uD83C\uDF36  ",
   "providerURL": "http://localhost:44444/silly",
-  "dir": "./storage",
+  "dir": "./storage/silly",
   "strategies": [
     "./lib/strategy/silly.js"
   ]

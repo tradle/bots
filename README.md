@@ -19,7 +19,10 @@
   - [Run Tradle server](#run-tradle-server)
   - [Create a provider](#create-a-provider)
   - [Connect your Tradle app](#connect-your-tradle-app)
-  - [Peek at the config](#peek-at-the-config)
+    - [Web](#web)
+    - [Mobile](#mobile)
+    - [Common](#common)
+  - [Configuring your bot](#configuring-your-bot)
   - [Console](#console)
     - [Sample Session](#sample-session)
     - [Console globals](#console-globals)
@@ -151,7 +154,7 @@ docker-compose -f tradle-server-compose.yml up -d
 
 ### Create a provider
 
-Let's create a provider called Get-a-Loan, with handle `loans` (url path: `/loans`), and one mortgage product.
+Let's create a provider called Silly, with handle `silly` (url path: `/silly`), and one mortgage product.
 
 ```sh
 # attach to the tradle-server container
@@ -159,19 +162,16 @@ docker attach tradle-server
 # ( you may need to hit Enter an extra time to show the prompt )
 # you are now in the tradle server's command line client
 # let's create a provider
-tradle-server$ newprovider loans "Get-a-Loan"
-# Generating a really good provider: loans 
+tradle-server$ newprovider silly Silly
+# Generating a really good provider: silly 
 # This may take a few seconds...
 # Enter a local path or a url of the provider logo:
-http://www.myiconfinder.com/uploads/iconsets/128-128-767de7a98f30bb81036e1829a50cfd06-float.png
+https://afv.com/wp-content/uploads/2014/11/Tongue.png
 # disable the Tradle server's in-house bot, which has its own complex agenda
-tradle-server$ silent loans
+tradle-server$ silent silly
 # subscribe your bot's web server for webhooks
 # OSX: see the previous section for the explanation for the IP address value
-tradle-server$ newwebhook loans http://10.200.10.1:8000
-# if you want to play with the products strategy (./lib/strategy/products.js)
-# uncomment the next line:
-# tradle-server$ enableproduct loans tradle.MortgageProduct
+tradle-server$ newwebhook silly http://10.200.10.1:8000
 # start things up
 tradle-server$ restartproviders
 ```
@@ -193,9 +193,35 @@ If you're using the Tradle mobile app, make sure your phone is on the same netwo
 1. Get your computer's local ip.
 2. In your Tradle app, on the Conversations screen, click the red button, and choose Add Server URL. Enter the address of your Tradle server: `http://{your_local_ip}:44444`
 
-### Peek at the config
+### Configuring your bot
 
-As you can see in [sample-conf.json](./sample-conf.json), the sample implementations will look for a provider at `http://localhost:44444/loans`, where `http://localhost:44444` is your Tradle server url, and `loans` is the handle of the provider you just created [above](#run-tradle-server).
+Below is the annotated default config file, which can be found at [./sample-conf.json](./sample-conf.json). It runs the strategy in [./lib/strategy/silly.js](./lib/strategy/silly.js). Once you outgrow the `silly` strategy (it took me years), and you've sampled the others in [./lib/strategy](./lib/strategy) feel free to create your own. To use a particular config file, run npm start as follows: 
+
+```sh
+npm start -- --conf ./path/to/your/config.json
+```
+
+If running multiple bots simultaneously, be sure to use a different `port` and a different `dir` for each.
+
+```js
+{
+  // the port on which your bot will run its web server
+  // when you register your webhooks on the Tradle server, specify this port
+  "port": 8000,
+  // the console prompt, in this case a red hot chili pepper icon
+  "repl": "\uD83C\uDF36  ",
+  // the url of the provider your bot controls on the Tradle server
+  // url format: http://localhost:44444/{providerHandle}
+  "providerURL": "http://localhost:44444/silly",
+  // the directory in which your bot will store its databases
+  // and any temporary files
+  "dir": "./storage/silly",
+  // strategies your bot will use when it starts
+  "strategies": [
+    "./lib/strategy/silly.js"
+  ]
+}
+```
 
 ### Console
 
@@ -209,7 +235,7 @@ The console can be started by running `npm start`. Below is a sample session. Be
 # switch to your tradle-bots directory
 #
 # npm start runs ./cmd.js with lots of logging. See "scripts" in package.json
-$ npm start
+$ npm start -- --conf ./conf/silly.json
 # Listening on port 8000
 # 
 # before anything test the connection to your provider:
@@ -246,10 +272,6 @@ bot.users.list()
 # { a7d454a8ec9a1bd375f9dd16afdadff9ed8765a03016f6abf7dd10df0f7c8fbe: 
 #   { id: 'a7d454a8ec9a1bd375f9dd16afdadff9ed8765a03016f6abf7dd10df0f7c8fbe',
 #     history: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
-#     forms: {},
-#     applications: {},
-#     products: {},
-#     importedVerifications: [],
 #     profile: { firstName: 'Ove' } } }
 # ok, this is the guy who was messaging us earlier
 # let's say hi (make sure to replace a7d4... with the 'id' that bot.users.list() printed out)
@@ -258,6 +280,9 @@ bot.send({ userId: 'a7d454a8ec9a1bd375f9dd16afdadff9ed8765a03016f6abf7dd10df0f7c
 # Silly will send a message to the app, and you can chat with Silly, 
 # but do not expect any serious stuff, be silly yourself
 bot.strategies.use(strategies.silly)
+# if you build your own strategy, you simply use require(..):
+#   bot.strategies.use(require('./path/to/my/strategy'))
+# or add the path to your own conf file's "strategies" field
 ```
 
 #### Console globals

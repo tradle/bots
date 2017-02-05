@@ -1,0 +1,9 @@
+{
+  "port": 8004,
+  "repl": "\uD83C\uDF36  ",
+  "providerURL": "http://localhost:44444/echo",
+  "dir": "./storage/echo",
+  "strategies": [
+    "./lib/strategy/echo.js"
+  ]
+}

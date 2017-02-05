@@ -13,18 +13,21 @@ const argv = require('minimist')(process.argv.slice(2), {
     c: 'conf',
   },
   default: {
-    conf: './sample-conf.json'
+    conf: './conf/silly.json'
   }
 })
 
+const debug = require('debug')('tradle:bot:scaffold')
 const conf = require(argv.conf)
 const app = require('./lib/app')(conf)
 const { bot } = app
 
-console.log('Listening on port ' + conf.port)
+debug('Listening on port ' + conf.port)
+debug('Databases will be stored in ' + conf.dir)
 
 if (conf.strategies) {
   conf.strategies.forEach(path => {
+    debug('Using strategy from ' + path)
     bot.strategies.use(require(path))
   })
 }

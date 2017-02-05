@@ -1,0 +1,9 @@
+{
+  "port": 8002,
+  "repl": "\uD83C\uDF36  ",
+  "providerURL": "http://localhost:44444/loans",
+  "dir": "./storage/products",
+  "strategies": [
+    "./lib/strategy/products.js"
+  ]
+}
