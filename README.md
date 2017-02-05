@@ -180,9 +180,18 @@ Note: when attached to a Docker container, if you hit Ctrl+C, you will kill it. 
 
 ### Connect your Tradle app
 
-1. If you're using the Tradle mobile app, make sure your phone is on the same network as the computer running your Tradle server.
-2. Get your computer's local ip.
-3. In your Tradle app, on the Conversations screen, click the red button, and choose Add Server URL. Enter the address of your Tradle server: `http://{your_local_ip}:44444`
+#### Web
+
+If you run `docker ps`, you should see two containers running: `tradle-server` and `tradle-web-app`. You can open the Tradle web app in your browser at: `http://localhost:55555`
+
+#### Mobile
+
+If you're using the Tradle mobile app, make sure your phone is on the same network as the computer running your Tradle server.
+
+#### Common
+
+1. Get your computer's local ip.
+2. In your Tradle app, on the Conversations screen, click the red button, and choose Add Server URL. Enter the address of your Tradle server: `http://{your_local_ip}:44444`
 
 ### Peek at the config
 
