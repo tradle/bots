@@ -39,7 +39,9 @@
 
 ## What the bot is this?
 
-This is a bot framework and a set of sample bots, referred to as "strategies" from here on for interfacing with a [provider](#your-bot-the-tradle-server-and-the-clients) running on a Tradle server
+This is a bot framework and a set of sample bots, referred to as "strategies". 
+
+from here on for interfacing with a [provider](#your-bot-the-tradle-server-and-the-clients) running on a Tradle server
 
 The Tradle server takes care of:
 - running the Tradle engine
