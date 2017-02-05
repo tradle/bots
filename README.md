@@ -77,6 +77,7 @@ How can you have any pudding if you don't eat your prerequisites?
 
 These instructions have been tested on the following platforms:
 - macOS Sierra
+- Windows 10 Home Edition
 
 If you run into problems setting up, submit an issue!
 
@@ -84,7 +85,7 @@ If you run into problems setting up, submit an issue!
 
 You will be using a dockerized Tradle server, and building your bots with Node.js
 
-- [Docker](https://docs.docker.com/engine/installation/).
+- [Docker](https://docs.docker.com/engine/installation/). Note that on Windwos 10 Home Edition you will need to install Docker Toolbox instead of Docker.
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Node.js](https://nodejs.org/en/) 6 or later
 
