@@ -10,7 +10,7 @@
   - [Platform](#platform)
   - [Environment](#environment)
     - [OSX Users](#osx-users)
-  - [Tradle server docker image](#tradle-server-docker-image)
+  - [Run docker, login](#run-docker-login)
 - [Usage](#usage)
   - [Clone this repository](#clone-this-repository)
   - [Install dependencies](#install-dependencies)
@@ -94,10 +94,11 @@ You will be using a dockerized Tradle server, and building your bots with Node.j
 2. Remove environment variables in your `~/.bash_profile` that start with `DOCKER_`. These are boot2docker's legacy.
 3. Open a fresh shell. Mm, you smell that? Me neither. boot2docker will plague us no more.
 
-### Tradle server docker image 
+### Run docker, login
 
-1. Create an account on Docker Hub 
-2. Run `docker login` in your shell and login with your Docker Hub credentials
+1. Create an account on Docker Hub if you haven't already
+2. Make sure Docker is running. To make sure you made sure, run `docker info` and count off two microseconds. If it doesn't spit out some awesome stats, docker is probably not running.
+3. Run `docker login` in your shell, and login with your Docker Hub credentials
 
 ## Usage
 
@@ -154,7 +155,7 @@ docker-compose -f tradle-server-compose.yml up -d
 
 ### Create a provider
 
-Let's create a provider called Silly, with handle `silly` (url path: `/silly`), and one mortgage product.
+Let's create a provider called Silly, with handle `silly` (url path: `/silly`)
 
 ```sh
 # attach to the tradle-server container
@@ -176,7 +177,9 @@ tradle-server$ newwebhook silly http://10.200.10.1:8000
 tradle-server$ restartproviders
 ```
 
-Note: when attached to a Docker container, if you hit Ctrl+C, you will kill it. Docker Compose will automatically restart it (see the `restart: always` flag in [tradle-server-compose.yml](./tradle-server-compose.yml)), but to be nice, detach with `Ctrl+P Ctrl+Q`
+Your Tradle server is now running at `http://localhost:44444`, and `silly` provider is running at `http://localhost:44444/silly`
+
+*Note: when attached to a Docker container, if you hit Ctrl+C, you will kill it. Docker Compose will automatically restart it (see the `restart: always` flag in [tradle-server-compose.yml](./tradle-server-compose.yml)), but to be nice, detach with `Ctrl+P Ctrl+Q`*
 
 ### Connect your Tradle app
 
@@ -195,13 +198,15 @@ If you're using the Tradle mobile app, make sure your phone is on the same netwo
 
 ### Configuring your bot
 
-Below is the annotated default config file, which can be found at [./sample-conf.json](./sample-conf.json). It runs the strategy in [./lib/strategy/silly.js](./lib/strategy/silly.js). Once you outgrow the `silly` strategy (it took me years), and you've sampled the others in [./lib/strategy](./lib/strategy) feel free to create your own. To use a particular config file, run npm start as follows: 
+No `silly` provider is complete witout a silly strategy. Below is the annotated default config file, which can be found at [./sample-conf.json](./sample-conf.json). It runs the strategy in [./lib/strategy/silly.js](./lib/strategy/silly.js). Once you outgrow the `silly` strategy (it took me years), and you've sampled the others in [./lib/strategy](./lib/strategy), feel free to create your own. To use a particular config file, run `npm start` as follows: 
 
 ```sh
+# nerds:
+#   the extra '--' after npm start is to help npm distinguish its own arguments
+#   from arguments to the underlying script (./cmd.js)
+#   it is equivalent to: DEBUG=tradle:* ./cmd.js --conf ./path/to/your/config.json
 npm start -- --conf ./path/to/your/config.json
 ```
-
-If running multiple bots simultaneously, be sure to use a different `port` and a different `dir` for each.
 
 ```js
 {
@@ -222,6 +227,8 @@ If running multiple bots simultaneously, be sure to use a different `port` and a
   ]
 }
 ```
+
+*Note: If running multiple bots simultaneously, be sure to use a different `port` and a different `dir` for each.*
 
 ### Console
 
