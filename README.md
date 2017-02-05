@@ -9,10 +9,13 @@
 - [Prerequisites](#prerequisites)
   - [Platform](#platform)
   - [Environment](#environment)
+    - [OSX Users](#osx-users)
   - [Tradle server docker image](#tradle-server-docker-image)
 - [Usage](#usage)
   - [Clone this repository](#clone-this-repository)
   - [Install dependencies](#install-dependencies)
+    - [with npm](#with-npm)
+    - [with yarn](#with-yarn)
   - [Run Tradle server](#run-tradle-server)
   - [Create a provider](#create-a-provider)
   - [Peek at the config](#peek-at-the-config)
@@ -20,6 +23,10 @@
     - [Sample Session](#sample-session)
     - [Console globals](#console-globals)
   - [Strategies](#strategies)
+    - [Receiving messages](#receiving-messages)
+    - [Sending messages](#sending-messages)
+    - [Creating blockchain seals](#creating-blockchain-seals)
+    - [Events](#events)
   - [Managing users](#managing-users)
 - [Known Limitations](#known-limitations)
 - [Contributing](#contributing)
@@ -73,14 +80,20 @@ If you run into problems setting up, submit an issue!
 
 You will be using a dockerized Tradle server, and building your bots with Node.js
 
-- [Docker](https://docs.docker.com/engine/installation/)
+- [Docker](https://docs.docker.com/engine/installation/).
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Node.js](https://nodejs.org/en/) 6 or later
+
+#### OSX Users
+
+1. Docker used to run via boot2docker, but now has the much better [Docker for Mac](https://docs.docker.com/docker-for-mac/). Install it. 
+2. Remove environment variables in your `~/.bash_profile` that start with `DOCKER_`. These are boot2docker's legacy.
+3. Open a fresh shell. Mm, you smell that? Me neither. boot2docker will plague us no more.
 
 ### Tradle server docker image 
 
 1. Create an account on Docker Hub 
-2. Email [support@tradle.io](mailto:support@tradle.io) to request access to the [https://hub.docker.com/r/tradle/server-cli/](https://hub.docker.com/r/tradle/server-cli/) docker image. Be sure to include your Docker Hub handle in the email. If, when you click the above link, you see 404 Page Not Found, you're either not logged in or don't have access.
+2. Run `docker login` in your shell and login with your Docker Hub credentials
 
 ## Usage
 
@@ -93,7 +106,22 @@ cd tradle-bots
 
 ### Install dependencies
 
-Install dependencies by running `yarn` or `npm install`. [yarn](https://github.com/yarnpkg/yarn) is the faster, leaner, and more emoji-infused package manager on the block.
+#### with npm
+
+Run `npm install`
+
+#### with yarn
+
+[yarn](https://github.com/yarnpkg/yarn) is the faster, leaner, and more emoji-infused package manager on the block.
+
+To install it, smirk ironically, and run: 
+
+```sh
+npm i -g yarn
+# if that doesn't work: sudo npm i -g yarn
+```
+
+Then install dependencies by running `yarn`
 
 ### Run Tradle server
 
