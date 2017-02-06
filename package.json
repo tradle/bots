@@ -37,6 +37,11 @@
     "test": "tap `git ls-files test/*.js`",
     "start": "DEBUG=tradle* ./cmd.js",
     "debug": "DEBUG=tradle* node --debug --inspect ./cmd.js",
-    "debug-brk": "DEBUG=tradle* node --debug-brk --inspect ./cmd.js"
+    "debug-brk": "DEBUG=tradle* node --debug-brk --inspect ./cmd.js",
+    "warn:docker": "echo '\\033[0;31mIF THIS TAKES MORE THAN A FEW SECONDS, DOCKER IS NOT RUNNING\\033[0m'",
+    "createvolumes": "docker volume create --name server-conf && docker volume create --name server-storage",
+    "server": "npm run createvolumes && npm run up",
+    "attach": "docker attach tradle-server",
+    "up": "docker-compose -f ./tradle-server-compose.yml up -d"
   }
 }

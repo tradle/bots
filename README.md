@@ -159,13 +159,13 @@ Create the necessary volumes, and launch!
 
 ```sh
 # switch to your tradle-bots directory
-# 
-# each of these lines should take a few seconds tops
-# if the console seems to hang, your docker daemon is unreachable
-docker volume create --name server-conf
-docker volume create --name server-storage
-# start up dockerized tradle server
-docker-compose -f tradle-server-compose.yml up -d
+# start up dockerized tradle server and web app
+npm run server
+# check things are running:
+docker ps
+# ... NAMES
+# ... tradle-web-app
+# ... tradle-server
 ```
 
 ### Create a provider
@@ -174,6 +174,7 @@ Let's create a provider called Silly, with handle `silly` (url path: `/silly`)
 
 ```sh
 # attach to the tradle-server container
+# or: `npm run attach`
 docker attach tradle-server
 # ( you may need to hit Enter an extra time to show the prompt )
 # you are now in the tradle server's command line client
