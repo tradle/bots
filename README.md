@@ -40,7 +40,7 @@
 ## What the bot is this?
 [Apps are dying, long live the bots](http://www.wired.co.uk/article/here-come-the-bots). 
 Bots provide a universal conversational UI, where new type of apps (called bots) are built on the server side, like we used to do with the Web apps.
-Tradle blockchain-based bot framework provides Tradle app on iOS, Android and Web, so that you can build apps / bots realy realy fast. Why another bot framework? Why blockchain? 
+Tradle's blockchain-based bot framework provides the Tradle app on iOS, Android and Web, so that you can build apps / bots really really fast. Why another bot framework? Why blockchain? 
 
 Tradle offers forms, not just texting. Forms are powerful, in 1995 they made the browser a universal interface for building apps. Devs define new forms with data models in json format. More on that later. 
 
@@ -76,9 +76,9 @@ The Tradle server acts like a router between your bot and your clients, on their
 
 From the client's perspective (see the Tradle app screenshot below), providers are listed together in the Conversations screen.
 
-In the guide that follows, you'll set up a service provider called Get-a-Loan, and connect your bot to it.
+In the guide that follows, you'll set up a service provider called Silly, and connect your bot to it.
 
-![providers in Tradle app](./docs/providers.png "Providers as seen in the Tradle app")
+![providers in Tradle app](./docs/providers1.png "Providers as seen in the Tradle app")
 
 ## Prerequisites
 
