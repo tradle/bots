@@ -38,13 +38,21 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## What the bot is this?
+[Apps are dying, long live the bots](http://www.wired.co.uk/article/here-come-the-bots). 
+Bots provide a universal conversational UI, where new type of apps (called bots) are built on the server side, like we used to do with the Web apps.
+Tradle blockchain-based bot framework provides Tradle app on iOS, Android and Web, so that you can build apps / bots realy realy fast. Why another bot framework? Why blockchain? 
 
-This is a bot framework and a set of sample bots, referred to as "strategies". 
+Tradle offers forms, not just texting. Forms are powerful, in 1995 they made the browser an universal interface for building apps. Devs define new forms with data models in json format. More on that later. 
 
-from here on for interfacing with a [provider](#your-bot-the-tradle-server-and-the-clients) running on a Tradle server
+Tradle server seals the data exchanged via forms onto the blockchain. This way any agreement, order, or other commercial or governmental transaction can be proven to have taken place. This allows to build powerful applications that work across many web sites. It allows to decentralize identities, marketplaces, governments, most everything, including the app stores, controlled today by two powerful corporations. Blockchain was called by the Economist, [the Trust Machine](http://www.economist.com/news/leaders/21677198-technology-behind-bitcoin-could-transform-how-economy-works-trust-machine). The Economist said that the blockchain will redefine how economy works, defy corruption, fight monopolies, and help us build the better world. No wonder, over [billion dollars has been invested into blockchain startups](https://news.bitcoin.com/1-4-billion-invested-blockchain-pwc/).
+
+The shift has started. It is up to you to make a difference. And Tradle is here to help.
+
+Tradle has used the blockchain, forms and bot interface to build a powerful global identity system, and is now selling its variant called KYC (know your customer) to 40 of the biggest financial institutions in the world. A startup like yours, we graduated from Startupbootcamp Fintech program in London at the end of 2015, and have won many awards since then. With Tier 1 multinationals buying it, regulators supporting it, we finally can open this as a framework for you.
+
+User in Tradle app opens a conversation with the [provider](#your-bot-the-tradle-server-and-the-clients). The brains behind the provider is your bot.
 
 The Tradle server takes care of:
-- running the Tradle engine
   - secure line to your users
   - creation/monitoring of blockchain transactions
 - calling your bot's web server with messages from the user (and blockchain-related events)
@@ -52,12 +60,13 @@ The Tradle server takes care of:
 The Tradle app takes care of:
 - cross-platform support (iOS & Android). iOS is currently more mature.
 - cross-browser support (Chrome, Firefox, Safari, IE11). Chrome currently has the best support.
-- UI (you can do some per-provider theming on the server-side)
+- offline support, a must on mobiles, but very hard to develop. You have it here out of the box.
+- UI. You can customize it with per-provider styles on the server-side. In teh near future you will be able to add your own JS code that will be executed in the app.
 
 This framework supports:
 - asynchronous messaging
-- reliable persistent-queue-based send/receive on both the server and the bot ends
-- easy to get started, see below sample strategy
+- reliable persistent-queue-based send/receive on both the server and the bot ends (the basis for offline support)
+- easy to get started. We provide set of sample bots, which we call "strategies"
 
 ## Your bot, the Tradle server, and the clients
 
