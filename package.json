@@ -43,7 +43,11 @@
     "tradle-compose": "docker-compose -f ./tradle-server-compose.yml",
     "update": "npm run tradle-compose -- pull",
     "up": "npm run tradle-compose -- up -d",
+    "server:stop": "npm run tradle-compose -- stop",
     "server": "npm run createvolumes && npm run update && npm run up",
-    "server-console": "docker attach tradle-server"
+    "server-console": "docker attach tradle-server",
+    "echo": "npm run start -- --conf ./conf/echo.json",
+    "silly": "npm run start -- --conf ./conf/silly.json",
+    "products": "npm run start -- --conf ./conf/products.json"
   }
 }
