@@ -40,8 +40,10 @@
     "debug-brk": "DEBUG=tradle* node --debug-brk --inspect ./cmd.js",
     "warn:docker": "echo '\\033[0;31mIF THIS TAKES MORE THAN A FEW SECONDS, DOCKER IS NOT RUNNING\\033[0m'",
     "createvolumes": "docker volume create --name server-conf && docker volume create --name server-storage",
-    "server": "npm run createvolumes && npm run up",
-    "attach": "docker attach tradle-server",
-    "up": "docker-compose -f ./tradle-server-compose.yml up -d"
+    "tradle-compose": "docker-compose -f ./tradle-server-compose.yml",
+    "update": "npm run tradle-compose -- pull",
+    "up": "npm run tradle-compose -- up -d",
+    "server": "npm run createvolumes && npm run update && npm run up",
+    "server-console": "docker attach tradle-server"
   }
 }

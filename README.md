@@ -184,8 +184,6 @@ tradle-server$ newprovider silly Silly
 # This may take a few seconds...
 # Enter a local path or a url of the provider logo:
 https://afv.com/wp-content/uploads/2014/11/Tongue.png
-# disable the Tradle server's in-house bot, which has its own complex agenda
-tradle-server$ silent silly
 # subscribe your bot's web server for webhooks
 # OSX: see the previous section for the explanation for the IP address value
 tradle-server$ newwebhook silly http://10.200.10.1:8000
@@ -201,16 +199,14 @@ Your Tradle server is now running at `http://localhost:44444`, and `silly` provi
 
 #### Web
 
-If you run `docker ps`, you should see two containers running: `tradle-server` and `tradle-web-app`. You can open the Tradle web app in your browser at: `http://localhost:55555`
+1. Make sure `docker ps` shows `tradle-web-app` running
+2. Open `http://localhost:55555` in the browser
 
 #### Mobile
 
-If you're using the Tradle mobile app, make sure your phone is on the same network as the computer running your Tradle server.
-
-#### Common
-
-1. Get your computer's local ip.
-2. In your Tradle app, on the Conversations screen, click the red button, and choose Add Server URL. Enter the address of your Tradle server: `http://{your_local_ip}:44444`
+1. Make sure your phone is on the same network as the computer running your Tradle server.
+2. Get your computer's local ip.
+3. In your Tradle app, on the Conversations screen, click the red button, and choose Add Server URL. Enter the address of your Tradle server: `http://{your_local_ip}:44444`
 
 ### Configuring your bot
 
