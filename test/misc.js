@@ -6,8 +6,6 @@ const {
   series
 } = require('../lib/utils')
 
-const manageUsers = require('../lib/users')
-
 test('series', co(function* (t) {
   // t.plan(6)
 

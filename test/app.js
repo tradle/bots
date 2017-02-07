@@ -29,6 +29,7 @@ test('send', co(function* (t) {
 
   const settings = nextSettings()
   const { close, bot } = createApp({
+    autostart: true,
     port: settings.app.port,
     providerURL: settings.tradleServer.providerURL
   })
@@ -83,6 +84,7 @@ test('receive', co(function* (t) {
 
   const settings = nextSettings()
   const { close, bot } = createApp({
+    autostart: true,
     port: settings.app.port,
     providerURL: settings.tradleServer.providerURL
   })

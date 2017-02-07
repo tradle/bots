@@ -1,6 +1,5 @@
 const crypto = require('crypto')
 const test = require('tape')
-const low = require('lowdb')
 const createBot = require('../lib/bot')
 const {
   co,
@@ -26,6 +25,7 @@ test('bot.send', co(function* (t) {
     })
   })
 
+  bot.start()
   bot.once('sent', function () {
     const { history } = bot.users.get('ted')
     t.same(history, [{ object: expected }])
@@ -42,8 +42,9 @@ test('bot.receive', co(function* (t) {
     send: noop
   })
 
+  bot.start()
   const object = createSimpleMessage('hey')
-  const message = { object: object }
+  const message = { object }
   const wrapper = {
     author: 'ted',
     object: message,
