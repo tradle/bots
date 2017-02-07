@@ -37,7 +37,7 @@ const init = co(function* init () {
 
   try {
     yield app.health()
-    log('\nfeeling FANtastic')
+    log('feeling FANtastic')
   } catch (err) {
     log(`Error: PROVIDER COULD NOT BE REACHED at ${conf.providerURL}\n`, err.message)
   }
