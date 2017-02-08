@@ -125,13 +125,7 @@ cd tradle-bots
 
 ### Install dependencies
 
-#### with npm
-
-Run `npm install`
-
-#### with yarn
-
-[yarn](https://github.com/yarnpkg/yarn) is the faster, leaner, and more emoji-infused package manager on the block.
+This project uses [yarn](https://github.com/yarnpkg/yarn) package manager, which is like [npm](https://github.com/npm/npm), but faster, leaner, and more emoji-infused. You had as at "emoji", yarn!
 
 To install it, smirk ironically, and run: 
 
@@ -140,7 +134,11 @@ npm i -g yarn
 # if that doesn't work: sudo npm i -g yarn
 ```
 
-Then install dependencies by running `yarn`
+Then install dependencies:
+
+```sh
+yarn
+```
 
 ### Run Tradle server
 
@@ -160,7 +158,7 @@ Start the server!
 ```sh
 # switch to your tradle-bots directory
 # start up dockerized tradle server and web app
-npm run server
+yarn run server
 # check things are running:
 docker ps
 # ... NAMES
@@ -174,7 +172,7 @@ Let's create a provider called Silly, with handle `silly` (url path: `/silly`)
 
 ```sh
 # attach to the tradle-server container
-# or: `npm run attach`
+# or: `yarn run attach`
 docker attach tradle-server
 # ( you may need to hit Enter an extra time to show the prompt )
 # you are now in the tradle server's command line client
@@ -210,14 +208,14 @@ Your Tradle server is now running at `http://localhost:44444`, and `silly` provi
 
 ### Configuring your bot
 
-No `silly` provider is complete witout a silly strategy. Below is the annotated default config file, which can be found at [./sample-conf.json](./sample-conf.json). It runs the strategy in [./lib/strategy/silly.js](./lib/strategy/silly.js). Once you outgrow the `silly` strategy (it took me years), and you've sampled the others in [./lib/strategy](./lib/strategy), feel free to create your own. To use a particular config file, run `npm start` as follows: 
+No `silly` provider is complete witout a silly strategy. Below is the annotated default config file, which can be found at [./sample-conf.json](./sample-conf.json). It runs the strategy in [./lib/strategy/silly.js](./lib/strategy/silly.js). Once you outgrow the `silly` strategy (it took me years), and you've sampled the others in [./lib/strategy](./lib/strategy), feel free to create your own. To use a particular config file, run `yarn start` as follows:
 
 ```sh
 # nerds:
-#   the extra '--' after npm start is to help npm distinguish its own arguments
+#   the extra '--' after yarn start is to help yarn distinguish its own arguments
 #   from arguments to the underlying script (./cmd.js)
 #   it is equivalent to: DEBUG=tradle:* ./cmd.js --conf ./path/to/your/config.json
-npm start -- --conf ./path/to/your/config.json
+yarn start -- --conf ./path/to/your/config.json
 ```
 
 ```js
@@ -246,15 +244,15 @@ npm start -- --conf ./path/to/your/config.json
 
 The easiest way to get started is by playing in the Javascript console. Make sure your Tradle server us up and [running](#run-tradle-server). 
 
-The console can be started by running `npm start`. Below is a sample session. Below that, see an outline of the objects and functions available in the global scope.
+The console can be started by running `yarn start`. Below is a sample session. Below that, see an outline of the objects and functions available in the global scope.
 
 #### Sample Session
 
 ```sh
 # switch to your tradle-bots directory
 #
-# npm start runs ./cmd.js with lots of logging. See "scripts" in package.json
-$ npm start -- --conf ./conf/silly.json
+# yarn start runs ./cmd.js with lots of logging. See "scripts" in package.json
+$ yarn start -- --conf ./conf/silly.json
 # Listening on port 8000
 # 
 # before anything test the connection to your provider:
