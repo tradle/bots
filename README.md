@@ -46,7 +46,7 @@ Tradle offers forms, not just texting. Forms are powerful, in 1995 they made the
 
 Tradle server seals the data exchanged via the forms onto the blockchain. This way any agreement, order, or other commercial or governmental transaction can be proven to have taken place. This allows to build powerful applications that work across many web sites. It allows to decentralize identities, marketplaces, governments, most everything, including the app stores, controlled today by two powerful corporations. Blockchain was called by the Economist, [the Trust Machine](http://www.economist.com/news/leaders/21677198-technology-behind-bitcoin-could-transform-how-economy-works-trust-machine). The Economist said that the blockchain will redefine how economy works, defy corruption, fight monopolies, and help us build a better world. No wonder over [billion dollars has been invested into blockchain startups](https://news.bitcoin.com/1-4-billion-invested-blockchain-pwc/).
 
-The tectnonic shift has started. It is up to you to make a difference. And Tradle is here to help.
+The tectonic shift has started. It is up to you to make a difference. And Tradle is here to help.
 
 Tradle has used the blockchain, forms and the bot interface to build a powerful global identity system, and is now selling its variant called KYC (know your customer) to 40 of the biggest financial institutions in the world. A startup like yours, we graduated from Startupbootcamp Fintech program in London at the end of 2015, and have won many awards since then. With Tier 1 multinationals buying it, [regulators supporting it](https://www.fca.org.uk/news/press-releases/financial-conduct-authority-unveils-successful-sandbox-firms-second-anniversary), we finally can open this as a framework for you.
 
@@ -61,7 +61,7 @@ The Tradle app takes care of:
 - cross-platform support (iOS & Android). iOS is currently more mature.
 - cross-browser support (Chrome, Firefox, Safari, IE11). Chrome currently has the best support.
 - offline support, a must on mobiles, but very hard to develop. You have it here out of the box.
-- UI. You can customize it with per-provider styles on the server-side. In teh near future you will be able to add your own JS code that will be executed in the app.
+- UI. You can customize it with per-provider styles on the server-side. In the near future you will be able to add your own JS code that will be executed in the app.
 
 This framework supports:
 - asynchronous messaging
@@ -97,8 +97,8 @@ If you run into problems setting up, submit an issue!
 You will be using a dockerized Tradle server, and building your bots with Node.js
 
 - [Docker](https://docs.docker.com/engine/installation/). 
-On Windwos 10 Home Edition you will need to install Docker Toolbox instead of Docker. 
-Follow the Docker link, find Windows installaton page and search for Toolbox.
+On Windows 10 Home Edition you will need to install Docker Toolbox instead of Docker. 
+Follow the Docker link, find Windows installation page and search for Toolbox.
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Node.js](https://nodejs.org/en/) 6 or later
 
@@ -208,7 +208,7 @@ Your Tradle server is now running at `http://localhost:44444`, and `silly` provi
 
 ### Configuring your bot
 
-No `silly` provider is complete witout a silly strategy. Below is the annotated default config file, which can be found at [./sample-conf.json](./sample-conf.json). It runs the strategy in [./lib/strategy/silly.js](./lib/strategy/silly.js). Once you outgrow the `silly` strategy (it took me years), and you've sampled the others in [./lib/strategy](./lib/strategy), feel free to create your own. To use a particular config file, run `yarn start` as follows:
+No `silly` provider is complete without a silly strategy. Below is the annotated default config file, which can be found at [./sample-conf.json](./sample-conf.json). It runs the strategy in [./lib/strategy/silly.js](./lib/strategy/silly.js). Once you outgrow the `silly` strategy (it took me years), and you've sampled the others in [./lib/strategy](./lib/strategy), feel free to create your own. To use a particular config file, run `yarn start` as follows:
 
 ```sh
 # nerds:
