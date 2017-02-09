@@ -6,7 +6,7 @@ volumes:
     external: true
 services:
   tradle:
-    image: tradle/server-cli:v3.4.0
+    image: tradle/server-cli:v3.5.2
     network_mode: bridge
     container_name: tradle-server
     restart: always
