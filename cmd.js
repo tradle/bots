@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const path = require('path')
 try {
   const SegfaultHandler = require('segfault-handler')
   SegfaultHandler.registerHandler("crash.log")
@@ -25,7 +26,8 @@ const {
   forceLog
 } = require('./lib/utils')
 
-const conf = normalizeConf(require(argv.conf))
+const confPath = path.resolve(process.cwd(), argv.conf)
+const conf = normalizeConf(require(confPath))
 conf.autostart = false
 
 const app = require('./lib/app')(conf)
@@ -45,9 +47,10 @@ const init = co(function* init () {
 
   const { bot } = app
   if (conf.strategies) {
-    conf.strategies.forEach(path => {
-      log('Using strategy from ' + path)
-      bot.strategies.use(require(path))
+    conf.strategies.forEach(relPath => {
+      const absPath = path.resolve(process.cwd(), relPath)
+      log('Using strategy from ' + absPath)
+      bot.strategies.use(require(absPath))
     })
   }
 
