@@ -4,9 +4,10 @@
 
 "@tradle/models@https://github.com/tradle/models":
   version "4.10.9"
-  resolved "https://github.com/tradle/models#4bea7873ac15840163fe3d49f79fa98c3d8ae05e"
+  resolved "https://github.com/tradle/models#6a041cd412a5d0798d397fee1f480f03f5438c2c"
   dependencies:
     minimist "^1.2.0"
+    typeforce "^1.10.6"
     write-file-atomic "^1.1.4"
 
 accepts@~1.3.3:
@@ -712,7 +713,7 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-inherits@2, inherits@2.0.3, inherits@^2.0.3, inherits@~2.0.1, inherits@~2.0.3:
+inherits@2, inherits@2.0.3, inherits@^2.0.1, inherits@^2.0.3, inherits@~2.0.1, inherits@~2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
 
@@ -1364,6 +1365,12 @@ type-is@~1.6.14:
 typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
+
+typeforce@^1.10.6:
+  version "1.10.6"
+  resolved "https://registry.yarnpkg.com/typeforce/-/typeforce-1.10.6.tgz#71bdca35b4e635b61245371b57c008cedfbec4db"
+  dependencies:
+    inherits "^2.0.1"
 
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
