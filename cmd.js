@@ -13,7 +13,8 @@ const argv = require('minimist')(process.argv.slice(2), {
     c: 'conf',
   },
   default: {
-    conf: './conf/silly.json'
+    conf: './conf/silly.json',
+    repl: true
   }
 })
 
@@ -50,7 +51,7 @@ const init = co(function* init () {
     })
   }
 
-  if (String(conf.repl) !== 'false') {
+  if (argv.repl) {
     const pepperIcon = '\uD83C\uDF36  '
     const prompt = typeof conf.repl === 'string' ? conf.repl : pepperIcon
     require('./lib/repl')({ prompt, app })

@@ -1,12 +1,10 @@
 const test = require('tape')
 const express = require('express')
 const request = require('superagent')
-const bodyParser = require('body-parser')
 const createApp = require('../lib/app')
 const {
   co,
   createSimpleMessage,
-  setDBSchema,
   bigJsonParser,
   shallowExtend
 } = require('../lib/utils')
@@ -35,7 +33,6 @@ test('send', co(function* (t) {
   })
 
   const object = createSimpleMessage('hey')
-  const message = { object }
   const tradleServerApp = express()
   const resp = {
     _s: 'some sig',
@@ -53,7 +50,7 @@ test('send', co(function* (t) {
     res.json(resp)
   })
 
-  tradleServerApp.use(function (err, req, res) {
+  tradleServerApp.use(function (err, req, res, next) {
     t.error(err)
     process.exit(1)
   })
