@@ -9,7 +9,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@tradle/models": "https://github.com/tradle/models",
     "backoff": "^2.5.0",
     "bluebird": "^3.4.7",
     "body-parser": "^1.16.0",
@@ -40,6 +39,7 @@
     "tape": "^4.6.3"
   },
   "optionalDependencies": {
+    "@tradle/models": "https://github.com/tradle/models",
     "segfault-handler": "^1.0.0"
   },
   "scripts": {
