@@ -16,7 +16,10 @@ const argv = require('minimist')(process.argv.slice(2), {
   default: {
     conf: './conf/silly.json',
     repl: true
-  }
+  },
+  boolean: [
+    'repl'
+  ]
 })
 
 const debug = require('debug')('tradle:bot:scaffold')
