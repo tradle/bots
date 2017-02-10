@@ -31,11 +31,6 @@
     - [Creating blockchain seals](#creating-blockchain-seals)
     - [Events](#events)
   - [Managing users](#managing-users)
-- [Existing bots and tools](#existing-bots-and-tools)
-  - [Keep it fresh](#keep-it-fresh)
-  - [Keep models fresh](#keep-models-fresh)
-  - [Hackathon Inviter](#hackathon-inviter)
-  - [Sell some product](#sell-some-product)
 - [Validation](#validation)
   - [Models](#models)
   - [Objects / Resources](#objects--resources)
@@ -459,34 +454,6 @@ Users are automatically registered with a default state object when the first me
 ```
 
 When you `bot.send(...)` or when your bot receives messages, they get appended to `state.history`. You can store whatever your evil bot needs on the user state object, just don't forget to `bot.users.save(userState)` lest the evil be thwarted.
-
-## Existing bots and tools
-
-### Keep it fresh
-
-[@tradle/bot-keep-fresh](http://github.com/tradle/bot-keep-fresh)
-
-Make sure your users get the latest models, styles, or jokes, prior to your next interaction. Used by [@tradle/bot-require-models](http://github.com/tradle/bot-require-models)
-
-### Keep models fresh
-
-[@tradle/bot-require-models](http://github.com/tradle/bot-require-models) 
-
-Makes sure that if your models change, they get sent to the user before anything else. Essentially a config of [@tradle/bot-keep-fresh](http://github.com/tradle/bot-keep-fresh)
-
-### Hackathon Inviter
-
-[@tradle/bot-inviter](http://github.com/tradle/bot-inviter)
-
-Email invites for the Blockchain hackathon, collect developer information, confirm email addresses. Live at [https://bots.tradle.io](https://bots.tradle.io).
-
-### Sell some product
-
-[@tradle/bot-products](http://github.com/tradle/bot-products)  
-
-Will someone submit a Pull Request to change that to "Sell some products" please? Tradle bots do not sell drugs.
-
-This one is a mini bot builder in itself. Configure it with your custom models and it'll sell them to your users. The [example bot](https://github.com/tradle/bot-products/tree/master/example.js) for this strategy is currently live on [https://bots.tradle.io](https://bots.tradle.io) as the Age Police. It can issue you proof-of-age certificates.
 
 ## Validation
 
