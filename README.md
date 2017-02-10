@@ -43,7 +43,7 @@
 ## What the bot is this?
 [Apps are dying, long live the bots](http://www.wired.co.uk/article/here-come-the-bots). 
 Bots provide a universal conversational UI, where new type of apps (called bots) are built on the server side, like we used to do with the Web apps.
-Tradle's blockchain-based bot framework provides the Tradle app on iOS, Android and Web, so that you can build apps / bots really really fast. Why another bot framework? Why blockchain? 
+Tradle's blockchain-based bot framework provides the Tradle app on iOS, Android and Web, so that you can build apps / bots really really fast. Why another bot framework? Why blockchain? Want to skip intro? See [ideas of the kind of bots you can build today](https://github.com/tradle/bots/blob/master/docs/bots.md).
 
 Tradle offers forms, not just texting. Forms are powerful, in 1995 they made the browser a universal interface for building apps. Devs define new forms with data models in json format. More on that later. 
 
