@@ -140,7 +140,7 @@ npm i -g yarn
 Then install dependencies:
 
 ```sh
-yarn
+yarn --ignore-optional
 ```
 
 ### Run Tradle server
