@@ -7,7 +7,12 @@ const {
   shallowExtend
 } = require('../lib/utils')
 
-const createBot = require('../lib/bot')
+const rawCreateBot = require('../lib/bot')
+
+function createBot (opts) {
+  opts.inMemory = true
+  return rawCreateBot(opts)
+}
 
 function noop () {}
 
@@ -19,7 +24,6 @@ test('bot.send', co(function* (t) {
   const expected = createSimpleMessage(text)
   const expectedTo = 'ted'
   const bot = createBot({
-    inMemory: true,
     send: co(function* send ({ userId, object }) {
       t.equal(userId, expectedTo)
       t.same(object, expected)
@@ -41,7 +45,6 @@ test('bot.receive', co(function* (t) {
   t.timeoutAfter(500)
 
   const bot = createBot({
-    inMemory: true,
     send: noop
   })
 
@@ -89,7 +92,6 @@ test('bot.seal', co(function* (t) {
 
   const expected = crypto.randomBytes(32).toString('hex')
   const bot = createBot({
-    inMemory: true,
     send: noop,
     seal: function ({ link }) {
       t.equal(link, expected)
@@ -120,5 +122,37 @@ test('bot.seal', co(function* (t) {
   yield read
 
   t.same(yield bot.seals.get(expected), sealData)
+  t.end()
+}))
+
+test('presend and prereceive', co(function* (t) {
+  const bot = createBot({
+    send: t.fail,
+    seal: function ({ link }) {
+      t.equal(link, expected)
+      return Promise.resolve()
+    }
+  })
+
+  bot.addPreReceiveHandler(function () {
+    throw new Error('1')
+  })
+
+  try {
+    yield bot.receive({ author: 'ted', object: {} })
+  } catch (err) {
+    t.equal(err.message, '1')
+  }
+
+  bot.addPreSendHandler(function () {
+    throw new Error('2')
+  })
+
+  try {
+    yield bot.send({ userId: 'ted', object: {} })
+  } catch (err) {
+    t.equal(err.message, '2')
+  }
+
   t.end()
 }))
