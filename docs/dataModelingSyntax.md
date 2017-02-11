@@ -1,4 +1,4 @@
-Tradle Data Modeling syntax
+#Tradle Data Modeling syntax
 
 ## Introduction
 
@@ -59,7 +59,7 @@ There is one exception to this rule, a special property that represents json. It
 
 3. **id**: specifies the name of the model, e.g. ‘tradle.Organization’
 
-4. **title: **optional, to display a name different from id. Useful for evolving UI without affecting the code that may be referencing that id.
+4. **title**: optional, to display a name different from id. Useful for evolving UI without affecting the code that may be referencing that id.
 
 5. **subClassOf**: optional, specifies this model as an extension of another model. Use this extremely sparingly, only when you absolutely need a strong rigidity in the data model. Instead consider using interfaces, see below. One very important use for subClassOf is ‘tradle.Form’. It is the only way to  for entering structured data. Another good use for *subclassOf* is ‘tradle.Enum’. Enum classes are defined in [data directory under tradle/models](https://github.com/tradle/models/tree/3fa9b772ea0a15c175ccd2f574b8e99377518586/data), and are used to list possible values of the property, e.g. marital status, gender, etc. This mechanism is also used for longer lists, which are predefined, like currencies, countries, etc. See for example, [Country](https://github.com/tradle/models/blob/243a8ccc7ef65ab68582ce51a44fe571f4ee0a58/models/tradle.Country.json) model, and [Country list](https://github.com/tradle/models/blob/8ee099313329657d6fc043d4dad2aebeb0df54f4/data/tradle.Country.json).
 
