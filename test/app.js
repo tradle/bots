@@ -8,7 +8,12 @@ const {
   shallowExtend
 } = require('../lib/utils')
 
-const createApp = require('../lib/app')
+const rawCreateApp = require('../lib/app')
+
+function createApp (conf) {
+  conf.inMemory = true
+  return rawCreateApp(conf)
+}
 
 let availablePort = 27147
 const PROVIDER_HANDLE = 'taxtime'
@@ -28,7 +33,6 @@ test('send', co(function* (t) {
 
   const settings = nextSettings()
   const { close, bot } = createApp({
-    inMemory: true,
     autostart: true,
     port: settings.app.port,
     providerURL: settings.tradleServer.providerURL
@@ -84,7 +88,6 @@ test('receive', co(function* (t) {
 
   const settings = nextSettings()
   const { close, bot } = createApp({
-    inMemory: true,
     dir: 'test.app.receive',
     autostart: true,
     port: settings.app.port,
