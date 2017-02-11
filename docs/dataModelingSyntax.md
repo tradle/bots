@@ -16,6 +16,7 @@ Half-baked model builder: [https://github.com/tradle/build-model](https://github
 
 Example:
 
+
   {
 
     type: 'tradle.Model',
