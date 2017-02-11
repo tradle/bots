@@ -5,7 +5,7 @@ A bot can be as simple as an alarm clock, and as complex as an full blown AI wit
 
 Most simple bots enable a type of conversation with your users, or even just an interaction. For example, the [Forget Your User](https://github.com/tradle/bot-forget-user) bot only knows how to handle one message: `tradle.ForgetMe`. When it receives that message, it wipes the user state object.
 
-[Silly Bot]('./lib/strategy/silly.js') is a tiny bot that is very bad at banter.
+[Silly Bot]('../lib/strategy/silly.js') is a tiny bot that is very bad at banter.
 
 [Keep it Fresh Bot](https://github.com/tradle/bot-keep-fresh) is a bot that watches a volatile item, and notifies your users. It can be configured to do anything from keeping your user updated with your latest data models ([see the Require Models bot](https://github.com/tradle/bot-require-models)) or styles, or for distributing the joke of the day. Hooked up to a microphone module, it can be used as a baby monitor and text your user when it's time to come home from vacation because the baby's awake.
 
