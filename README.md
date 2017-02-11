@@ -201,7 +201,7 @@ Your Tradle server is now running at `http://localhost:44444`, and `silly` provi
 #### Web
 
 1. Make sure `docker ps` shows `tradle-web-app` running
-2. Open `http://localhost:55555` in the browser
+2. Open `http://localhost:55555` in Google Chrome. Firefox, Safari and IE11 are almost there.
 
 #### Mobile
 
