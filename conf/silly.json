@@ -1,5 +1,5 @@
 {
-  "port": 8000,
+  "port": 8001,
   "repl": "\uD83C\uDF36  ",
   "providerURL": "http://localhost:44444/silly",
   "dir": "./storage/silly",

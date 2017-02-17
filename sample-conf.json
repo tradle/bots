@@ -3,6 +3,7 @@
   "repl": "\uD83C\uDF36  ",
   "providerURL": "http://localhost:44444/silly",
   "dir": "./storage",
+  "store": "@tradle/kv-levelup",
   "strategies": [
     "./lib/strategy/silly.js"
   ]

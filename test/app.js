@@ -1,13 +1,14 @@
 const test = require('tape')
 const express = require('express')
 const request = require('superagent')
-const createApp = require('../lib/app')
 const {
   co,
   createSimpleMessage,
   bigJsonParser,
   shallowExtend
 } = require('../lib/utils')
+
+const createApp = require('../lib/app')
 
 let availablePort = 27147
 const PROVIDER_HANDLE = 'taxtime'
@@ -27,6 +28,7 @@ test('send', co(function* (t) {
 
   const settings = nextSettings()
   const { close, bot } = createApp({
+    inMemory: true,
     autostart: true,
     port: settings.app.port,
     providerURL: settings.tradleServer.providerURL
@@ -61,12 +63,13 @@ test('send', co(function* (t) {
   })
 
   bot.once('sent', co(function* () {
-    t.same(bot.users.list(), {
-      ted: {
+    t.same(yield bot.users.list(), [{
+      key: 'ted',
+      value: {
         id: 'ted',
         history: [resp]
       }
-    })
+    }])
 
     tradleServer.close()
     close()
@@ -81,6 +84,8 @@ test('receive', co(function* (t) {
 
   const settings = nextSettings()
   const { close, bot } = createApp({
+    inMemory: true,
+    dir: 'test.app.receive',
     autostart: true,
     port: settings.app.port,
     providerURL: settings.tradleServer.providerURL
@@ -97,17 +102,18 @@ test('receive', co(function* (t) {
     objectinfo: { link: 'something' }
   }
 
-  bot.addReceiveHandler(function () {
-    t.same(bot.users.list(), {
-      ted: {
+  bot.on('message', co(function* ({ user, object }) {
+    t.same(yield bot.users.list(), [{
+      key: 'ted',
+      value: {
         id: 'ted',
         history: [shallowExtend({ inbound: true }, wrapper)]
       }
-    })
+    }])
 
     close()
     t.end()
-  })
+  }))
 
   yield request
     .post(settings.app.url)
