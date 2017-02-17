@@ -1,8 +1,5 @@
-process.env.TEST = true
-
 const crypto = require('crypto')
 const test = require('tape')
-const rawCreateBot = require('../lib/bot')
 const {
   co,
   Promise,
@@ -10,20 +7,7 @@ const {
   shallowExtend
 } = require('../lib/utils')
 
-const memdown = require('memdown')
-const createStore = require('@tradle/kv-levelup')
-
-function createBot (opts) {
-  if (!opts.createStore) {
-    opts.createStore = inMemoryStore
-  }
-
-  return rawCreateBot(opts)
-}
-
-function inMemoryStore ({ path }) {
-  return createStore({ path, leveldown: memdown })
-}
+const createBot = require('../lib/bot')
 
 function noop () {}
 
@@ -35,8 +19,7 @@ test('bot.send', co(function* (t) {
   const expected = createSimpleMessage(text)
   const expectedTo = 'ted'
   const bot = createBot({
-    dir: 'bot.send',
-    createStore: inMemoryStore,
+    inMemory: true,
     send: co(function* send ({ userId, object }) {
       t.equal(userId, expectedTo)
       t.same(object, expected)
@@ -58,7 +41,7 @@ test('bot.receive', co(function* (t) {
   t.timeoutAfter(500)
 
   const bot = createBot({
-    dir: 'bot.receive',
+    inMemory: true,
     send: noop
   })
 
@@ -106,7 +89,7 @@ test('bot.seal', co(function* (t) {
 
   const expected = crypto.randomBytes(32).toString('hex')
   const bot = createBot({
-    dir: 'bot.seal',
+    inMemory: true,
     send: noop,
     seal: function ({ link }) {
       t.equal(link, expected)

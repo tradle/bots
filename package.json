@@ -1,7 +1,7 @@
 {
   "name": "@tradle/bots",
   "version": "1.0.0",
-  "main": "./lib/bot.js",
+  "main": "index.js",
   "bin": "./cmd.js",
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
   "license": "GPLv3",
   "dependencies": {
     "@tradle/kv": "tradle/kv",
-    "@tradle/kv-levelup": "file:../tradle-kv-levelup",
+    "@tradle/kv-levelup": "tradle/kv-levelup",
     "backoff": "^2.5.0",
     "bluebird": "^3.4.7",
     "body-parser": "^1.16.0",
@@ -26,8 +26,9 @@
     "memdown": "^1.2.4",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
-    "queuey": "file:../queuey",
+    "queuey": "mvayngrib/queuey#changes",
     "safe-json-stringify": "^1.0.3",
+    "safedown": "^1.0.1",
     "superagent": "^3.4.1",
     "traverse": "^0.6.6",
     "xtend": "^4.0.1"
@@ -49,9 +50,9 @@
   "scripts": {
     "test": "tap `git ls-files test/*.js`",
     "lint": "eslint --quiet --ignore-path .gitignore .",
-    "start": "cross-env DEBUG=tradle* ./cmd.js",
-    "debug": "cross-env DEBUG=tradle* node --debug --inspect ./cmd.js",
-    "debug-brk": "cross-env DEBUG=tradle* node --debug-brk --inspect ./cmd.js",
+    "start": "cross-env DEBUG=tradle:bots* ./cmd.js",
+    "debug": "cross-env DEBUG=tradle:bots* node --debug --inspect ./cmd.js",
+    "debug-brk": "cross-env DEBUG=tradle:bots* node --debug-brk --inspect ./cmd.js",
     "warn:docker": "echo '\\033[0;31mIF THIS TAKES MORE THAN A FEW SECONDS, DOCKER IS NOT RUNNING\\033[0m'",
     "createvolumes": "docker volume create --name server-conf && docker volume create --name server-storage",
     "tradle-compose": "docker-compose -f ./tradle-server-compose.yml",

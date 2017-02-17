@@ -1,15 +1,14 @@
-
 const test = require('tape')
 const {
   co,
   shallowClone
 } = require('../lib/utils')
 
-const Store = require('@tradle/kv').wrap(require('@tradle/kv-levelup'))
+const createStore = require('../lib/store')
 const manageUsers = require('../lib/users')
 
 test('users', co(function* (t) {
-  const store = Store.wrap({ store: lowStore() })
+  const store = createStore({ inMemory: true })
   const users = manageUsers({ store })
   t.same(yield users.list(), [])
 
