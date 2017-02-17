@@ -1,4 +1,3 @@
-
 const test = require('tape')
 const {
   Promise,
