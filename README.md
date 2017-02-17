@@ -369,7 +369,7 @@ module.exports = function echoStrategy (bot) {
 
 If your Promises are a bit rusty, or if you're asking yourself "what's `co`?" or "isn't `yield` only for generators?", skim [this](./docs/promises.md)
 
-[./lib/strategy/silly.js](./lib/strategy/silly.js) is a slightly more complex strategy, and [./lib/strategy/products.js](./lib/strategy/products.js) is an expert-system type strategy that is a pared down version of the Tradle server's in-house bot's strategy.
+[./lib/strategy/silly.js](./lib/strategy/silly.js) is a slightly more complex strategy, and [./lib/strategy/products.js](./lib/strategy/products.js) is an expert-system type strategy that is a pared down version of the Tradle server's in-house bot's strategy. To deploy it you will need access to the [private models repo](https://github.com/tradle/models). Ping mark@tradle.io for access.
 
 #### Receiving messages
 
