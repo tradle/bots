@@ -168,7 +168,7 @@ module.exports = {
         "no-restricted-modules": "error",
         "no-restricted-properties": "error",
         "no-restricted-syntax": "error",
-        "no-return-assign": "error",
+        "no-return-assign": "warn",
         "no-return-await": "error",
         "no-script-url": "error",
         "no-self-compare": "error",
