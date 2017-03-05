@@ -127,11 +127,7 @@ test('bot.seal', co(function* (t) {
 
 test('presend and prereceive', co(function* (t) {
   const bot = createBot({
-    send: t.fail,
-    seal: function ({ link }) {
-      t.equal(link, expected)
-      return Promise.resolve()
-    }
+    send: t.fail
   })
 
   bot.addPreReceiveHandler(function () {
