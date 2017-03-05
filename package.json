@@ -26,7 +26,7 @@
     "memdown": "^1.2.4",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
-    "queuey": "mvayngrib/queuey#changes",
+    "queuey": "mvayngrib/queuey#async",
     "safe-json-stringify": "^1.0.3",
     "safedown": "^1.0.1",
     "superagent": "^3.4.1",
