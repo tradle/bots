@@ -277,6 +277,7 @@ testing connection to provider...
 all good!
 # list stored users
 bot.users.list()
+# TIP: assign to variable with: users = yield bot.users.list()
 # no users yet
 {}
 # list our strategies
