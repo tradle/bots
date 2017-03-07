@@ -2,8 +2,11 @@ const test = require('tape')
 const {
   Promise,
   co,
-  series
+  series,
+  wait
 } = require('../lib/utils')
+
+const createLocker = require('../lib/locker')
 
 test('series', co(function* (t) {
   // t.plan(6)
@@ -56,4 +59,37 @@ test('series', co(function* (t) {
   }
 
   t.end()
+}))
+
+test('lock', co(function* (t) {
+  const lock = createLocker()
+  const unlockA = yield lock('a')
+  let unlockedA
+  lock('a')
+    .then(() => {
+      t.equal(unlockedA, true)
+      t.end()
+    })
+    .catch(t.error)
+
+  // can lock on another id
+  const unlockB = yield lock('b')
+  yield wait(100)
+  unlockedA = true
+  unlockA()
+}))
+
+test('lock timeout', co(function* (t) {
+  // prevent exit
+  const timeout = setTimeout(() => {}, 1000)
+
+  const lock = createLocker({ timeout: 100 })
+  yield lock('a')
+  const start = Date.now()
+  yield lock('a')
+  const time = Date.now() - start
+  t.ok(time > 50)
+  t.end()
+
+  clearTimeout(timeout)
 }))
