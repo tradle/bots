@@ -100,6 +100,7 @@ test('receive', co(function* (t) {
   }
 
   const wrapper = {
+    index: 0,
     author: 'ted',
     object: message,
     objectinfo: { link: 'something' }
