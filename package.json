@@ -14,7 +14,7 @@
     "backoff": "^2.5.0",
     "bluebird": "^3.4.7",
     "body-parser": "^1.16.0",
-    "clone": "^2.1.0",
+    "clone": "^2.1.1",
     "co-express": "mvayngrib/co-express#no-co",
     "cross-env": "^3.1.4",
     "debug": "^2.6.0",
