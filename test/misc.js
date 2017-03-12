@@ -7,6 +7,32 @@ const {
 } = require('../lib/utils')
 
 const createLocker = require('../lib/locker')
+const createStore = require('../lib/store')
+const cachify = require('../lib/cachify')
+
+test('cachify', co(function* (t) {
+  const store = createStore({ inMemory: true })
+  const cachified = cachify({ store })
+  const { get } = store
+  store.get = t.fail
+  yield cachified.set('a', 'b')
+  t.equal(yield cachified.get('a'), 'b')
+  t.equal(yield get('a'), 'b')
+  cachified.set('a', 'c')
+  t.equal(yield cachified.get('a'), 'c')
+  t.equal(yield get('a'), 'c')
+
+  store.get = get
+  yield cachified.del('a')
+  try {
+    yield cachified.get('a')
+    t.fail('failed to delete key')
+  } catch (err) {
+    t.ok(err)
+  }
+
+  t.end()
+}))
 
 test('series', co(function* (t) {
   // t.plan(6)
