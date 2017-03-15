@@ -5,7 +5,7 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Digital Identity Platform](#Digital-Identity-Platform)
+- [Digital Identity Platform](#digital-identity-platform)
 - [What the bot is this?](#what-the-bot-is-this)
 - [Your bot, the Tradle server, and the clients](#your-bot-the-tradle-server-and-the-clients)
 - [Prerequisites](#prerequisites)
@@ -41,7 +41,7 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Digital Identity Platform
-Tradle has created an identity platform on blockchain. Blockchain allowed us to create a self-souvereign identity that is owned by you, not by any institution or the government. We have used this identoty platform to then build a Know Your Customer (KYC) product form the banks and insurance companies. And now you can build your own applications on this platform. There is much to be said on the topic of identity, and we have a lot of materials on the subject to share with you. This paragragraph is a temporary stub, which will soon be expanded. 
+Tradle has created an identity platform on blockchain. Blockchain allowed us to create a self-souvereign identity that is owned by you, not by any institution or the government. We have used this identity platform to then build a Know Your Customer (KYC) product, which we are successfully selling to the biggest banks and insurance companies in the world. Identity is at the core of all applications, and an identity that no one owns but you is essential in today's world. It required 3 years of blood and sweat to build, making sure it is good for us, and that governments will be able to accept it too. Tradle are working with several governments in official programs, and are in discussions with at least a dozen. We have found a formula for full anonymity of your identity on the blockchain, yet givning law enforcement an ability to request to repeal some parts of your anonymity in a lawful way, without resorting to mass surveilance. With this foundation your fintech or insureTech startup can build your own applications much faster. There is much to be said on the topic of identity, and we have a lot of materials on the subject to share with you. This paragragraph is a temporary stub, which will soon be expanded. 
 
 ## What the bot is this?
 [Apps are dying, long live the bots](http://www.wired.co.uk/article/here-come-the-bots). 
