@@ -5,7 +5,7 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
+- [Digital Identity Platform](#Digital-Identity-Platform)
 - [What the bot is this?](#what-the-bot-is-this)
 - [Your bot, the Tradle server, and the clients](#your-bot-the-tradle-server-and-the-clients)
 - [Prerequisites](#prerequisites)
@@ -39,6 +39,9 @@
 - [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Digital Identity Platform
+Tradle has created an identity platform on blockchain. Blockchain allowed us to create a self-souvereign identity that is owned by you, not by any institution or the government. We have used this identoty platform to then build a Know Your Customer (KYC) product form the banks and insurance companies. And now you can build your own applications on this platform. There is much to be said on the topic of identity, and we have a lot of materials on the subject to share with you. This paragragraph is a temporary stub, which will soon be expanded. 
 
 ## What the bot is this?
 [Apps are dying, long live the bots](http://www.wired.co.uk/article/here-come-the-bots). 
