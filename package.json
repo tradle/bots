@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/tradle/bots"
   },
-  "license": "MIT",
+  "license": "GPLv3",
   "dependencies": {
     "backoff": "^2.5.0",
     "bluebird": "^3.4.7",
