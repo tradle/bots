@@ -1486,7 +1486,7 @@ qs@6.4.0, qs@^6.1.0:
 
 queuey@mvayngrib/queuey#async:
   version "1.5.1"
-  resolved "https://codeload.github.com/mvayngrib/queuey/tar.gz/09f629b7525ff24e5b2f11fa7c57f3cdd209dd2f"
+  resolved "https://codeload.github.com/mvayngrib/queuey/tar.gz/5b2aa1a3030b521eb3516f07460aa573d94b0e70"
   dependencies:
     bluebird "^3.4.7"
     lowdb latest
