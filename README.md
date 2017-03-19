@@ -497,3 +497,5 @@ Build a model in code.
 ## Contributing
 
 Pull requests are welcome. If you build a strategy that you would like to share or show off, submit a pull request to add it to this README.
+
+The [master](https://github.com/tradle/tradle-bots) branch has stable if outdated code. The [dev](https://github.com/tradle/bots/tree/dev) branch has the latest developments, so pull requests are best submitted there.
