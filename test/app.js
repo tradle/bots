@@ -38,6 +38,8 @@ test('send', co(function* (t) {
     providerURL: settings.tradleServer.providerURL
   })
 
+  disableAllStrategies(bot)
+
   const object = createSimpleMessage('hey')
   const tradleServerApp = express()
   const resp = {
@@ -94,11 +96,10 @@ test('receive', co(function* (t) {
     providerURL: settings.tradleServer.providerURL
   })
 
-  const object = createSimpleMessage('hey')
-  const message = {
-    object: object
-  }
+  disableAllStrategies(bot)
 
+  const object = createSimpleMessage('hey')
+  const message = { object }
   const wrapper = {
     index: 0,
     author: 'ted',
@@ -126,3 +127,7 @@ test('receive', co(function* (t) {
       data: wrapper
     })
 }))
+
+function disableAllStrategies (bot) {
+  bot.strategies.list().forEach(strategy => bot.strategies.disable(strategy))
+}
