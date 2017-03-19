@@ -1,13 +1,13 @@
 # @tradle/bots
 
-## [Hackathon people, click me](./docs/hackathon.md)
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 
 - [Digital Identity Platform](#digital-identity-platform)
 - [What the bot is this?](#what-the-bot-is-this)
 - [Your bot, the Tradle server, and the clients](#your-bot-the-tradle-server-and-the-clients)
+- [Talk to some sample bots](#talk-to-some-sample-bots)
 - [Prerequisites](#prerequisites)
   - [Platform](#platform)
   - [Environment](#environment)
@@ -87,6 +87,14 @@ From the client's perspective (see the Tradle app screenshot below), providers a
 In the guide that follows, you'll set up a service provider called Silly, and connect your bot to it.
 
 ![providers in Tradle app](./docs/providers1.png "Providers as seen in the Tradle app")
+
+## Talk to some sample bots
+
+At [https://bots.tradle.io](https://bots.tradle.io) there's a Tradle web app set up with a bunch of test bots, some of which are built with this framework (Inviter and Age Verification). Register, click the chats icon in the Profile page footer and chat with bots.
+
+1. Conversation Screen       | 2. Chatting with the Inviter bot 
+:---------------------------:|:---------------------------:
+![](./docs/web-app.png)    |  ![talking to "Inviter"](./docs/web-app1.png)
 
 ## Prerequisites
 
