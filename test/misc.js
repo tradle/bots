@@ -3,6 +3,7 @@ const {
   Promise,
   co,
   series,
+  bubble,
   wait
 } = require('../lib/utils')
 
@@ -84,6 +85,25 @@ test('series', co(function* (t) {
     t.equal(Number(err.message), 2)
   }
 
+  t.end()
+}))
+
+test('bubble', co(function* (t) {
+  let ran = 0
+  yield bubble([
+    () => {
+      t.equal(ran++, 0)
+      return Promise.resolve()
+    },
+    () => {
+      t.equal(ran++, 1)
+      t.pass()
+    },
+    () => Promise.resolve(false),
+    () => t.fail('should not have been called'),
+  ])
+
+  t.equal(ran, 2)
   t.end()
 }))
 
