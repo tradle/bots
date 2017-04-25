@@ -60,7 +60,7 @@ test('bot.receive', co(function* (t) {
   }
 
   let i = 0
-  bot.hooks.receive.on(co(function* ({ user, object }) {
+  bot.hook.receive(co(function* ({ user, object }) {
     if (i++ === 0) {
       checkHistory(user)
     } else {
@@ -105,11 +105,11 @@ test('bot.seal', co(function* (t) {
     return new Promise(resolve => bot.once(event, resolve))
   })
 
-  bot.hooks.seals.read.on(co(function* ({ link }) {
+  bot.hook.readseal(co(function* ({ link }) {
     t.equal(link, expected)
   }))
 
-  bot.hooks.seals.wrote.on(co(function* ({ link }) {
+  bot.hook.wroteseal(co(function* ({ link }) {
     t.equal(link, expected)
   }))
 
@@ -132,7 +132,7 @@ test('presend and prereceive', co(function* (t) {
     send: t.fail
   })
 
-  bot.hooks.receive.pre(function () {
+  bot.hook.prereceive(function () {
     throw EXPECTED_ERROR
   })
 
@@ -150,7 +150,7 @@ test('presend and prereceive', co(function* (t) {
     t.equal(err, EXPECTED_ERROR)
   }
 
-  bot.hooks.send.pre(function () {
+  bot.hook.presend(function () {
     throw EXPECTED_ERROR
   })
 
