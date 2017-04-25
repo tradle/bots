@@ -90,6 +90,10 @@ ansi-styles@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-2.2.1.tgz#b432dd3358b634cf75e1e4664368240533c1ddbe"
 
+any-promise@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/any-promise/-/any-promise-1.3.0.tgz#abc6afeedcea52e809cdc0376aed3ce39635d17f"
+
 aproba@^1.0.3:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.1.1.tgz#95d3600f07710aa0e9298c726ad5ecf2eacbabab"
@@ -1951,6 +1955,13 @@ xtend@~2.0.6:
 xtend@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-3.0.0.tgz#5cce7407baf642cba7becda568111c493f59665a"
+
+ya-promise-queue@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ya-promise-queue/-/ya-promise-queue-1.1.0.tgz#06fa8b388193c1dc5a8335d1986f687287efd3b7"
+  dependencies:
+    any-promise "^1.3.0"
+    co "^4.6.0"
 
 yallist@^2.0.0:
   version "2.0.1"
