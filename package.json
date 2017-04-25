@@ -31,6 +31,7 @@
     "mkdirp": "^0.5.1",
     "mutexify": "^1.1.0",
     "object.pick": "^1.2.0",
+    "once": "^1.4.0",
     "queuey": "mvayngrib/queuey#async",
     "safe-json-stringify": "^1.0.3",
     "safedown": "^1.0.1",

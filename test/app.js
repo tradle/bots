@@ -1,6 +1,7 @@
 const test = require('tape')
 const express = require('express')
 const request = require('superagent')
+const BASE_STRATEGY = require('../lib/strategy/base')
 const {
   co,
   createSimpleMessage,
@@ -129,5 +130,9 @@ test('receive', co(function* (t) {
 }))
 
 function disableAllStrategies (bot) {
-  bot.strategies.list().forEach(strategy => bot.strategies.disable(strategy))
+  bot.strategies.list().forEach(strategy => {
+    if (strategy !== BASE_STRATEGY) {
+      bot.strategies.disable(strategy)
+    }
+  })
 }

@@ -8,6 +8,8 @@ const {
 } = require('../lib/utils')
 
 const rawCreateBot = require('../lib/bot')
+const TYPE = '_t'
+const EXPECTED_ERROR = new Error('this error is expected, move along')
 
 function createBot (opts) {
   opts.inMemory = true
@@ -58,11 +60,11 @@ test('bot.receive', co(function* (t) {
   }
 
   let i = 0
-  bot.addReceiveHandler(co(function* ({ user, object }) {
+  bot.hooks.receive.on(co(function* ({ user, object }) {
     if (i++ === 0) {
       checkHistory(user)
     } else {
-      throw new Error('this error is expected, move along')
+      throw EXPECTED_ERROR
     }
   }))
 
@@ -103,11 +105,11 @@ test('bot.seal', co(function* (t) {
     return new Promise(resolve => bot.once(event, resolve))
   })
 
-  bot.seals.addOnReadHandler(co(function* ({ link }) {
+  bot.hooks.seals.read.on(co(function* ({ link }) {
     t.equal(link, expected)
   }))
 
-  bot.seals.addOnWroteHandler(co(function* ({ link }) {
+  bot.hooks.seals.wrote.on(co(function* ({ link }) {
     t.equal(link, expected)
   }))
 
@@ -130,24 +132,32 @@ test('presend and prereceive', co(function* (t) {
     send: t.fail
   })
 
-  bot.addPreReceiveHandler(function () {
-    throw new Error('1')
+  bot.hooks.receive.pre(function () {
+    throw EXPECTED_ERROR
   })
 
-  try {
-    yield bot.receive({ author: 'ted', object: {} })
-  } catch (err) {
-    t.equal(err.message, '1')
+  const object = createSimpleMessage('hey')
+  const message = { object }
+  const wrapper = {
+    author: 'ted',
+    object: message,
+    objectinfo: { link: 'something' }
   }
 
-  bot.addPreSendHandler(function () {
-    throw new Error('2')
+  try {
+    yield bot.receive(wrapper)
+  } catch (err) {
+    t.equal(err, EXPECTED_ERROR)
+  }
+
+  bot.hooks.send.pre(function () {
+    throw EXPECTED_ERROR
   })
 
   try {
     yield bot.send({ userId: 'ted', object: {} })
   } catch (err) {
-    t.equal(err.message, '2')
+    t.equal(err, EXPECTED_ERROR)
   }
 
   t.end()
