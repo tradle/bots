@@ -10,6 +10,7 @@ const {
 const createLocker = require('../lib/locker')
 const createStore = require('../lib/store')
 const cachify = require('../lib/cachify')
+const PromiseEmitter = require('../lib/promise-emitter')
 
 test('cachify', co(function* (t) {
   const store = createStore({ inMemory: true })
@@ -138,4 +139,55 @@ test('lock timeout', co(function* (t) {
   t.end()
 
   clearTimeout(timeout)
+}))
+
+test('promise emitter', co(function* (t) {
+  const emitter = new PromiseEmitter()
+
+  const expectedArgs = [1, 2, 3]
+
+  let called = 0
+  emitter.on('a', function (...args) {
+    t.equal(called++, 0)
+    t.same(args, expectedArgs)
+    return new Promise(resolve => setTimeout(resolve, 100))
+  })
+
+  emitter.on('a', function (...args) {
+    t.equal(called++, 1)
+    t.same(args, expectedArgs)
+  })
+
+  yield emitter.emit('a', ...expectedArgs)
+  t.equal(called, 2)
+
+  emitter.removeAllListeners()
+  emitter.on('a', function () {
+    return Promise.reject(new Error('async'))
+  })
+
+  try {
+    yield emitter.emit('a')
+  } catch (err) {
+    t.equal(err.message, 'async')
+  }
+
+  emitter.on('b', function () {
+    t.pass()
+    t.end()
+  })
+
+  // should not remove 'b' listener
+  emitter.removeAllListeners('a')
+  emitter.on('a', function () {
+    throw new Error('sync')
+  })
+
+  try {
+    yield emitter.emit('a')
+  } catch (err) {
+    t.equal(err.message, 'sync')
+  }
+
+  emitter.emit('b')
 }))
