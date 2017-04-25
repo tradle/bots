@@ -93,7 +93,6 @@ test('bot.receive', co(function* (t) {
 }))
 
 test('bot.seal', co(function* (t) {
-  t.plan(4)
   t.timeoutAfter(500)
 
   const expected = crypto.randomBytes(32).toString('hex')
@@ -118,6 +117,12 @@ test('bot.seal', co(function* (t) {
   }))
 
   bot.seals.seal({ link: expected })
+  bot.seals.seal({ link: expected })
+    .then(
+      () => t.fail('queued duplicate seal'),
+      err => t.ok(/exist/.test(err.message))
+    )
+
   yield pushed
 
   bot.seals.onwrote({ link: expected, txId: 'sometxid' })

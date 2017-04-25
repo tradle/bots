@@ -11,6 +11,7 @@ const createLocker = require('../lib/locker')
 const createStore = require('../lib/store')
 const cachify = require('../lib/cachify')
 const PromiseEmitter = require('../lib/promise-emitter')
+const levelup = require('../lib/levelup')
 
 test('cachify', co(function* (t) {
   const store = createStore({ inMemory: true })
@@ -190,4 +191,21 @@ test('promise emitter', co(function* (t) {
   }
 
   emitter.emit('b')
+}))
+
+test('recreate levelup', co(function* (t) {
+  let db = levelup('./blah.db', true)
+  Promise.promisifyAll(db)
+  yield db.putAsync('a', 'b')
+  t.equal(yield db.getAsync('a'), 'b')
+  yield db.destroyAsync()
+  db = levelup('./blah.db', true)
+  try {
+    yield db.get('a')
+    t.fail('db should be empty')
+  } catch (err) {
+    t.ok(err)
+  }
+
+  t.end()
 }))
