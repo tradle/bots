@@ -61,14 +61,18 @@ test('bot.receive', co(function* (t) {
 
   let i = 0
   bot.hook.receive(co(function* ({ user, object }) {
-    if (i++ === 0) {
-      checkHistory(user)
-    } else {
+    if (i++ > 0) {
       throw EXPECTED_ERROR
     }
   }))
 
+  bot.hook.postreceive(co(function* ({ user, object }) {
+    checkHistory(user)
+  }))
+
+  // succeed
   bot.receive(wrapper)
+  // fail
   bot.receive(wrapper)
 
   bot.on('message', co(function* () {
