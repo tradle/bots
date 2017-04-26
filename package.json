@@ -70,6 +70,7 @@
     "server-console": "docker attach tradle-server",
     "echo": "yarn run start -- --conf ./conf/echo.json",
     "silly": "yarn run start -- --conf ./conf/silly.json",
-    "products": "yarn run start -- --conf ./conf/products.json"
+    "products": "yarn run start -- --conf ./conf/products.json",
+    "coverage": "istanbul cover tape test/*.js"
   }
 }

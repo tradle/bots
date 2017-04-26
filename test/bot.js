@@ -95,12 +95,19 @@ test('bot.receive', co(function* (t) {
 test('bot.seal', co(function* (t) {
   t.timeoutAfter(500)
 
-  const expected = crypto.randomBytes(32).toString('hex')
+  const expected = '74671fb032fffe385e710f2230f4568ccbb1753ced5393e3a00763266051a378'
+  const expectedToFail = '892a3039807e734e1b6cc5ee844739d26eae2e3b6d846fc02a1493ce21c59b9a'
+
+  let i = 0
   const bot = createBot({
     send: noop,
     seal: function ({ link }) {
-      t.equal(link, expected)
-      return Promise.resolve()
+      if (i++ === 0) {
+        t.equal(link, expected)
+        return Promise.resolve()
+      }
+
+      throw EXPECTED_ERROR
     }
   })
 
@@ -116,12 +123,21 @@ test('bot.seal', co(function* (t) {
     t.equal(link, expected)
   }))
 
-  bot.seals.seal({ link: expected })
-  bot.seals.seal({ link: expected })
+  bot.seal({ link: expected })
+  bot.seal({ link: expected })
     .then(
       () => t.fail('queued duplicate seal'),
       err => t.ok(/exist/.test(err.message))
     )
+
+  bot.seal({ link: expectedToFail })
+
+  const promiseError = new Promise(resolve => {
+    bot.on('error', function (err) {
+      t.equal(err.link, expectedToFail)
+      resolve()
+    })
+  })
 
   yield pushed
 
@@ -133,6 +149,9 @@ test('bot.seal', co(function* (t) {
   yield read
 
   t.same(yield bot.seals.get(expected), sealData)
+  yield promiseError
+
+  bot.stop()
   t.end()
 }))
 
@@ -169,5 +188,6 @@ test('presend and prereceive', co(function* (t) {
     t.equal(err, EXPECTED_ERROR)
   }
 
+  bot.stop()
   t.end()
 }))
