@@ -4,7 +4,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Mythos](#mythos)
+- [Digital Identity Intro](#digital-identity-intro)
 - [Examples](#examples)
 - [The pieces of the puzzle](#the-pieces-of-the-puzzle)
 - [Your bot, the Tradle server, and the clients](#your-bot-the-tradle-server-and-the-clients)
@@ -41,7 +41,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Mythos
+## Digital Identity Intro
 
 Jump down the [rabbit hole](./docs/mythos.md).
 
