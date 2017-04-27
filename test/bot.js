@@ -182,3 +182,27 @@ test('presend and prereceive', co(function* (t) {
 
   t.end()
 }))
+
+test('delete user, clear history', co(function* (t) {
+  const text = 'hey'
+  const expected = createSimpleMessage(text)
+  const expectedTo = 'ted'
+  const bot = createBot({
+    send: co(function* send ({ userId, object }) {
+      t.equal(userId, expectedTo)
+      t.same(object, expected)
+      return { object }
+    })
+  })
+
+  bot.once('sent', co(function* () {
+    let history = yield bot.users.history.get('ted')
+    t.same(history, [{ object: expected }])
+    yield bot.users.del('ted')
+    history = yield bot.users.history.get('ted')
+    t.same(history, [])
+    t.end()
+  }))
+
+  bot.send({ userId: expectedTo, object: text })
+}))

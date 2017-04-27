@@ -44,8 +44,5 @@ test('users', co(function* (t) {
   yield users.create(key, ted)
   t.same(yield users.list(), [{ key, value: expected }])
 
-  yield users.clear()
-  t.same(yield users.list(), [])
-
   t.end()
 }))
