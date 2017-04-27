@@ -1,8 +1,12 @@
 ## Digital Identity Platform
 
-Tradle has created an identity platform on blockchain. Blockchain allowed us to create a self-sovereign identity that is owned by you, not by any institution or the government. We have used this identity platform to then build a Know Your Customer (KYC) product, which we are successfully selling to the biggest banks and insurance companies in the world. And now your fintech,  or insureTech startup can enter highly regulated markets much faster.
+Tradle has created an identity platform on blockchain. Blockchain allowed us to create a self-sovereign identity that is owned by you, not by any institution or the government. We have used this identity platform to then build a Know Your Customer (KYC) product, which we are successfully selling to the biggest banks and insurance companies in the world. 
 
-Identity is at the core of all applications, and an identity that no one owns but you yoirself is essential in today's world. It required us 3 years of blood and sweat to build, making sure it is good for us, as citizens, for the businesses, multinationals, and their service providers, financial institutions, and that the governments will be able to accept it too. Tradle are working with several governments in official programs, and are in discussions with at least a dozen. We have found a formula for full anonymity of your identity on the blockchain, yet giving law enforcement an ability to request to repeal some parts of your anonymity in a lawful way, without resorting to mass surveilance. There is much to be said on the topic of identity, and we have a lot of materials on the subject to share with you. This paragragraph is a temporary stub, which will soon be expanded. 
+And now the fintechs, insureTechs and mature financial institutions launch digital products in this highly regulated market much faster.
+
+Identity is at the core of all applications, and an identity that no one owns but you yourself is essential in today's world. It took us 3 years of blood and sweat to build, making sure it is good for us, as citizens, for the businesses, multinationals, and their service providers, financial institutions, and that the governments will be able to accept it too. 
+
+Tradle is working with several regulators in official programs, and is in discussions with about 15. We have found a formula for the full anonymity of your identity on blockchain, yet giving law enforcement an ability to request to repeal some parts of your anonymity in a lawful way, without resorting to mass surveilance. There is much to be said on the topic of identity, and we have a lot of materials on the subject to share with you. This paragragraph is a temporary stub, which will soon be expanded. 
 
 ## What the bot is this?
 
