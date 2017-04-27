@@ -18,8 +18,7 @@ test('users', co(function* (t) {
 
   let expected = {
     id: key,
-    name: key,
-    history: []
+    name: key
   }
 
   t.same(yield users.list(), [{ key, value: expected }])

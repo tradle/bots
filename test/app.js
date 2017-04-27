@@ -73,8 +73,7 @@ test('send', co(function* (t) {
     t.same(yield bot.users.list(), [{
       key: 'ted',
       value: {
-        id: 'ted',
-        history: [resp]
+        id: 'ted'
       }
     }])
 
@@ -112,8 +111,7 @@ test('receive', co(function* (t) {
     t.same(yield bot.users.list(), [{
       key: 'ted',
       value: {
-        id: 'ted',
-        history: [shallowExtend({ inbound: true }, wrapper)]
+        id: 'ted'
       }
     }])
 

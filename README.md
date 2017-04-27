@@ -489,6 +489,8 @@ Build a model in code.
 
 - database: for simplicity and ease of getting started, the bot framework uses [lowdb](https://github.com/typicode/lowdb) for its databases. Yes, it's not a production-level database, it writes synchronously to the file-system, etc. Feel free to substitute it with your personal preference once you're past the prototype phase (e.g. the Tradle server uses LevelDB).
 
+- user state object: currently holds the user's messaging history. It would be good to have the history separate as an append-only feed, and only dig it up when needed (instead of on every change to the user object)
+
 ## Contributing
 
 Pull requests are welcome. If you build a strategy that you would like to share or show off, submit a pull request to add it to this README.
