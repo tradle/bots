@@ -6,7 +6,7 @@ volumes:
     external: true
 services:
   tradle:
-    image: tradle/server-cli:v3.5.2
+    image: tradle/server-cli:v3.10.0
     network_mode: bridge
     container_name: tradle-server
     restart: always
@@ -28,7 +28,7 @@ services:
     tty: true
     stdin_open: true
   web-build:
-    image: tradle/web-app:local
+    image: tradle/web-app:local-1.1.0
     container_name: tradle-web-app
     restart: always
     ports:
