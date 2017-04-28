@@ -7,6 +7,8 @@ const {
   shallowExtend
 } = require('../lib/utils')
 
+const { fakeWrapper } = require('./utils')
+
 const rawCreateBot = require('../lib/bot')
 const TYPE = '_t'
 
@@ -21,24 +23,25 @@ test('bot.send', co(function* (t) {
   t.plan(3)
   t.timeoutAfter(500)
 
+  const from = 'bill'
+  const to = 'ted'
   const text = 'hey'
   const expected = createSimpleMessage(text)
-  const expectedTo = 'ted'
+  let resp
   const bot = createBot({
-    send: co(function* send ({ userId, object }) {
-      t.equal(userId, expectedTo)
+    send: co(function* ({ userId, object }) {
+      t.equal(userId, to)
       t.same(object, expected)
-      return { object }
+      return resp = fakeWrapper({ from, to, object })
     })
   })
 
-  bot.start()
   bot.once('sent', co(function* () {
     const history = yield bot.users.history.get('ted')
-    t.same(history, [{ object: expected }])
+    t.same(history, [resp])
   }))
 
-  bot.send({ userId: expectedTo, object: text })
+  bot.send({ userId: to, object: text })
 }))
 
 test('bot.receive', co(function* (t) {
@@ -49,22 +52,22 @@ test('bot.receive', co(function* (t) {
     send: noop
   })
 
-  bot.start()
   const object = createSimpleMessage('hey')
   const message = { object }
-  const wrapper = {
-    author: 'ted',
-    object: message,
-    objectinfo: { link: 'something' }
-  }
+  const from = 'ted'
+  const to = 'bill'
+  const wrapper = fakeWrapper({ from, to, object })
 
   let i = 0
   let expected = []
-  bot.hook.receive(co(function* ({ user, object }) {
-    yield checkHistory()
-  }))
 
-  bot.hook.postreceive(co(function* ({ user, object }) {
+  const checkHistory = co(function* () {
+    t.same(yield bot.users.history.get('ted'), expected)
+  })
+
+  bot.hook.receive(checkHistory)
+
+  bot.hook.postreceive(co(function* () {
     expected = [
       shallowExtend({
         inbound: true
@@ -91,10 +94,6 @@ test('bot.receive', co(function* (t) {
 
   bot.on('error', function (err) {
     t.equal(err.action, 'receive')
-  })
-
-  const checkHistory = co(function* () {
-    t.same(yield bot.users.history.get('ted'), expected)
   })
 }))
 
@@ -162,12 +161,9 @@ test('presend and prereceive', co(function* (t) {
   })
 
   const object = createSimpleMessage('hey')
-  const message = { object }
-  const wrapper = {
-    author: 'ted',
-    object: message,
-    objectinfo: { link: 'something' }
-  }
+  const from = 'ted'
+  const to = 'bill'
+  const wrapper = fakeWrapper({ from, to, object })
 
   yield bot.receive(wrapper)
 
@@ -186,23 +182,23 @@ test('presend and prereceive', co(function* (t) {
 test('delete user, clear history', co(function* (t) {
   const text = 'hey'
   const expected = createSimpleMessage(text)
-  const expectedTo = 'ted'
+  const from = 'bill'
+  const to = 'ted'
+  let resp
   const bot = createBot({
     send: co(function* send ({ userId, object }) {
-      t.equal(userId, expectedTo)
-      t.same(object, expected)
-      return { object }
+      return resp = fakeWrapper({ from, to, object })
     })
   })
 
   bot.once('sent', co(function* () {
     let history = yield bot.users.history.get('ted')
-    t.same(history, [{ object: expected }])
+    t.same(history, [resp])
     yield bot.users.del('ted')
     history = yield bot.users.history.get('ted')
     t.same(history, [])
     t.end()
   }))
 
-  bot.send({ userId: expectedTo, object: text })
+  bot.send({ userId: to, object: text })
 }))

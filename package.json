@@ -31,6 +31,7 @@
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mutexify": "^1.1.0",
+    "object.omit": "^2.0.1",
     "object.pick": "^1.2.0",
     "once": "^1.4.0",
     "pump": "^1.0.2",
@@ -60,7 +61,7 @@
     "segfault-handler": "^1.0.0"
   },
   "scripts": {
-    "test": "tap `git ls-files test/*.js`",
+    "test": "node test",
     "lint": "eslint --quiet --ignore-path .gitignore .",
     "start": "cross-env DEBUG=tradle:bots* ./cmd.js",
     "debug": "cross-env DEBUG=tradle:bots* node --debug --inspect ./cmd.js",
@@ -74,7 +75,6 @@
     "server-console": "docker attach tradle-server",
     "echo": "yarn run start -- --conf ./conf/echo.json",
     "silly": "yarn run start -- --conf ./conf/silly.json",
-    "products": "yarn run start -- --conf ./conf/products.json",
-    "coverage": "istanbul cover tape test/*.js"
+    "products": "yarn run start -- --conf ./conf/products.json"
   }
 }

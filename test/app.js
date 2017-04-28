@@ -10,6 +10,7 @@ const {
 } = require('../lib/utils')
 
 const rawCreateApp = require('../lib/app')
+const TYPE = '_t'
 
 function createApp (conf) {
   conf.inMemory = true
@@ -39,23 +40,32 @@ test('send', co(function* (t) {
     providerURL: settings.tradleServer.providerURL
   })
 
-  disableAllStrategies(bot)
+  disableNonBaseStrategies(bot)
 
+  const from = 'bill'
+  const to = 'ted'
   const object = createSimpleMessage('hey')
   const tradleServerApp = express()
   const resp = {
-    _s: 'some sig',
+    message: {
+      author: from,
+      recipient: to,
+      link: 'abc',
+      permalink: 'abc',
+      object: {
+        [TYPE]: 'tradle.Message',
+        object: shallowExtend({ _s: 'some other sig' }, object)
+      }
+    },
     object: {
-      object: shallowExtend({ _s: 'some other sig' }, object)
+      author: from,
+      link: 'efg',
+      permalink: 'efg'
     }
   }
 
   tradleServerApp.post(`/${PROVIDER_HANDLE}/message`, bigJsonParser(), function (req, res) {
-    t.same(req.body, {
-      to: 'ted',
-      object
-    })
-
+    t.same(req.body, { to, object })
     res.json(resp)
   })
 
@@ -96,15 +106,28 @@ test('receive', co(function* (t) {
     providerURL: settings.tradleServer.providerURL
   })
 
-  disableAllStrategies(bot)
+  disableNonBaseStrategies(bot)
 
   const object = createSimpleMessage('hey')
-  const message = { object }
+  const message = {
+    [TYPE]: 'tradle.Message',
+    object
+  }
+
   const wrapper = {
-    index: 0,
-    author: 'ted',
-    object: message,
-    objectinfo: { link: 'something' }
+    // index: 0,
+    message: {
+      author: 'ted',
+      recipient: 'bill',
+      object: message,
+      link: 'abc',
+      permalink: 'abc',
+    },
+    object: {
+      author: 'ted',
+      link: 'efg',
+      permalink: 'efg'
+    }
   }
 
   bot.on('message', co(function* ({ user, object }) {
@@ -127,7 +150,7 @@ test('receive', co(function* (t) {
     })
 }))
 
-function disableAllStrategies (bot) {
+function disableNonBaseStrategies (bot) {
   bot.strategies.list().forEach(strategy => {
     if (strategy !== BASE_STRATEGY) {
       bot.strategies.disable(strategy)
