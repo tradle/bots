@@ -13,16 +13,13 @@ function fakeWrapper ({ from, to, object }) {
         link: msgLink,
         permalink: msgLink
       },
-      object: {
+      payload: {
         author: from,
         link: objLink,
         permalink: objLink
       }
     },
-    data: {
-      message: { object },
-      object: object
-    }
+    message: { object }
   }
 }
 

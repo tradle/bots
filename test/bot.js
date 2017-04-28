@@ -69,9 +69,13 @@ test('bot.receive', co(function* (t) {
 
   bot.hook.postreceive(co(function* () {
     expected = [
-      shallowExtend({
-        inbound: true
-      }, wrapper)
+      shallowExtend(wrapper, {
+        metadata: shallowExtend(wrapper.metadata, {
+          message: shallowExtend(wrapper.metadata.message, {
+            inbound: true
+          })
+        })
+      })
     ]
 
     yield checkHistory()
