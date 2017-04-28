@@ -3,3 +3,4 @@ users.json
 *.log
 storage/
 .env
+coverage/
