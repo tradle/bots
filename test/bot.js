@@ -37,7 +37,7 @@ test('bot.send', co(function* (t) {
   })
 
   bot.once('sent', co(function* () {
-    const history = yield bot.users.history.get('ted')
+    const history = yield bot.users.history.dump('ted')
     t.same(history, [resp])
   }))
 
@@ -62,7 +62,7 @@ test('bot.receive', co(function* (t) {
   let expected = []
 
   const checkHistory = co(function* () {
-    t.same(yield bot.users.history.get('ted'), expected)
+    t.same(yield bot.users.history.dump('ted'), expected)
   })
 
   bot.hook.receive(checkHistory)
@@ -178,7 +178,7 @@ test('presend and prereceive', co(function* (t) {
   yield bot.send({ userId: 'ted', object: {} })
   yield promiseSkipSend
   yield promiseSkipReceive
-  t.same(yield bot.users.history.get('ted'), [])
+  t.same(yield bot.users.history.dump('ted'), [])
 
   t.end()
 }))
@@ -196,10 +196,10 @@ test('delete user, clear history', co(function* (t) {
   })
 
   bot.once('sent', co(function* () {
-    let history = yield bot.users.history.get('ted')
+    let history = yield bot.users.history.dump('ted')
     t.same(history, [resp])
     yield bot.users.del('ted')
-    history = yield bot.users.history.get('ted')
+    history = yield bot.users.history.dump('ted')
     t.same(history, [])
     t.end()
   }))
