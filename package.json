@@ -11,7 +11,7 @@
   "dependencies": {
     "@tradle/kv": "tradle/kv",
     "@tradle/kv-levelup": "tradle/kv-levelup",
-    "@tradle/multiqueue": "^2.2.0",
+    "@tradle/multiqueue": "tradle/multiqueue",
     "backoff": "^2.5.0",
     "bluebird": "^3.4.7",
     "body-parser": "^1.16.0",
