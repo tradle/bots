@@ -13,12 +13,12 @@ test('basic', loudCo(function* (t) {
   const bill = [
     { a: 1 },
     { b: 2 },
-  ]
+  ].map(wrap)
 
   const ted = [
     { c: 1 },
     { d: 2 },
-  ]
+  ].map(wrap)
 
   yield Promise.all(bill.map(item => histories.append({ userId: 'bill', item })))
   t.equal(yield histories.length('bill'), 2)
@@ -32,3 +32,12 @@ test('basic', loudCo(function* (t) {
   t.same(yield histories.dump('ted'), ted)
   t.end()
 }))
+
+function wrap (obj) {
+  return {
+    metadata: {},
+    message: {
+      object: { object: obj }
+    }
+  }
+}
