@@ -1,6 +1,7 @@
 const test = require('tape')
 const {
   Promise,
+  promisifyAll,
   co,
   series,
   bubble,
@@ -195,7 +196,7 @@ test('promise emitter', co(function* (t) {
 
 test('recreate levelup', co(function* (t) {
   let db = levelup('./blah.db', true)
-  Promise.promisifyAll(db)
+  promisifyAll(db)
   yield db.putAsync('a', 'b')
   t.equal(yield db.getAsync('a'), 'b')
   yield db.destroyAsync()
