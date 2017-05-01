@@ -4,13 +4,14 @@ const {
   co,
   Promise,
   createSimpleMessage,
-  shallowExtend
+  shallowExtend,
+  omit
 } = require('../lib/utils')
 
 const { fakeWrapper } = require('./utils')
 
 const rawCreateBot = require('../lib/bot')
-const TYPE = '_t'
+const { TYPE, SIG } = require('../lib/constants')
 
 function createBot (opts) {
   opts.inMemory = true
@@ -20,28 +21,43 @@ function createBot (opts) {
 function noop () {}
 
 test('bot.send', co(function* (t) {
-  t.plan(3)
-  t.timeoutAfter(500)
-
   const from = 'bill'
   const to = 'ted'
+  const cc = 'rufus'
   const text = 'hey'
   const expected = createSimpleMessage(text)
   let resp
   const bot = createBot({
     send: co(function* ({ userId, object }) {
-      t.equal(userId, to)
-      t.same(object, expected)
+      if (object[SIG]) {
+        t.equal(userId, cc)
+        t.same(omit(object, [SIG]), expected)
+      } else {
+        t.equal(userId, to)
+        t.same(object, expected)
+      }
+
       return resp = fakeWrapper({ from, to, object })
     })
   })
 
-  bot.once('sent', co(function* () {
+  bot.send({ userId: to, object: text })
+  bot.once('sent', co(function* ({ wrapper }) {
+    const { object } = wrapper.message
     const history = yield bot.users.history.dump('ted')
     t.same(history, [resp])
+
+    // cc rufus
+    bot.send({ userId: cc, object })
+
+    bot.once('sent', co(function* ({ wrapper }) {
+      const { object } = wrapper.message
+      const history = yield bot.users.history.dump('rufus')
+      t.same(history, [resp])
+      t.end()
+    }))
   }))
 
-  bot.send({ userId: to, object: text })
 }))
 
 test('bot.receive', co(function* (t) {

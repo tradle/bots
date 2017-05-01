@@ -1,10 +1,15 @@
-const { co } = require('../lib/utils')
+const { co, shallowExtend } = require('../lib/utils')
 const crypto = require('crypto')
+const SIG = '_s'
 
 exports.fakeWrapper = fakeWrapper
 exports.loudCo = loudCo
 
 function fakeWrapper ({ from, to, object }) {
+  object = shallowExtend({
+    [SIG]: object[SIG] || newSig()
+  }, object)
+
   const msgLink = newLink()
   const objLink = newLink()
   return {
@@ -21,12 +26,27 @@ function fakeWrapper ({ from, to, object }) {
         permalink: objLink
       }
     },
-    message: { object }
+    message: {
+      [SIG]: newSig(),
+      object
+    }
   }
 }
 
 function newLink () {
-  return crypto.randomBytes(32).toString('hex')
+  return hex32()
+}
+
+function newSig () {
+  return hex32()
+}
+
+function hex32 () {
+  return randomHex(32)
+}
+
+function randomHex (n) {
+  return crypto.randomBytes(n).toString('hex')
 }
 
 function loudCo (gen) {
