@@ -1,6 +1,6 @@
 const test = require('tape')
 const {
-  shallowClone
+  clone
 } = require('../lib/utils')
 
 const { loudCo } = require('./utils')
@@ -20,16 +20,19 @@ test('basic', loudCo(function* (t) {
     { d: 2 },
   ].map(wrap)
 
-  yield Promise.all(bill.map(item => histories.append({ userId: 'bill', item })))
+  const billExpected = bill.map(getExpected)
+  const tedExpected = ted.map(getExpected)
+
+  yield Promise.all(bill.map(item => histories.append({ userId: 'bill', item: clone(item) })))
   t.equal(yield histories.length('bill'), 2)
-  t.same(yield histories.get({ userId: 'bill', index: 1 }), bill[1])
-  t.same(yield histories.dump('bill'), bill)
+  t.same(yield histories.get({ userId: 'bill', index: 1 }), billExpected[1])
+  t.same(yield histories.dump('bill'), billExpected)
   t.equal(yield histories.length('ted'), 0)
 
-  yield Promise.all(ted.map(item => histories.append({ userId: 'ted', item })))
+  yield Promise.all(ted.map(item => histories.append({ userId: 'ted', item: clone(item) })))
   t.equal(yield histories.length('bill'), 2)
   t.equal(yield histories.length('ted'), 2)
-  t.same(yield histories.dump('ted'), ted)
+  t.same(yield histories.dump('ted'), tedExpected)
   t.end()
 }))
 
@@ -40,4 +43,10 @@ function wrap (obj) {
       object: { object: obj }
     }
   }
+}
+
+function getExpected (item, i) {
+  const copy = clone(item)
+  copy.metadata.index = i
+  return copy
 }
