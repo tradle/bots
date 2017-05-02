@@ -10,7 +10,7 @@ const {
 } = require('../lib/utils')
 
 const rawCreateApp = require('../lib/app')
-const TYPE = '_t'
+const { TYPE } = require('../lib/constants')
 
 function createApp (conf) {
   conf.inMemory = true
