@@ -13,7 +13,6 @@ const createStore = require('../lib/store')
 const cachify = require('../lib/cachify')
 const PromiseEmitter = require('../lib/promise-emitter')
 const levelup = require('../lib/levelup')
-const createHooks = require('../lib/hooks')
 
 test('cachify', co(function* (t) {
   const store = createStore({ inMemory: true })
@@ -208,46 +207,6 @@ test('recreate levelup', co(function* (t) {
   } catch (err) {
     t.ok(err)
   }
-
-  t.end()
-}))
-
-test('hooks', co(function* (t) {
-  const hooks = createHooks()
-  const fired = {}
-  const aArgs = [1, 2]
-
-  let defaultOn = true
-  yield new Promise(resolve => {
-    hooks.default('a', function () {
-      t.equal(defaultOn, true)
-      resolve()
-    })
-
-    hooks.fire('a', 1)
-  })
-
-  defaultOn = false
-  hooks.hook('a', function (...args) {
-    t.same(args, aArgs)
-    fired['a'] = true
-    // prevent subsequent handlers
-    return false
-  })
-
-  const promiseA = new Promise(resolve => hooks.once('a', (...args) => resolve(args)))
-  yield hooks.fire('a', ...aArgs)
-  t.ok(fired['a'])
-  t.same(yield promiseA, aArgs)
-
-  // will not fire if bubble() is used because `false` is returned
-  // in the previous handler
-  hooks.hook('a', function (...args) {
-    t.fail('should have been prevented')
-  })
-
-  hooks.on('a', t.fail)
-  yield hooks.bubble('a', ...aArgs)
 
   t.end()
 }))
