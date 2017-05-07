@@ -35,6 +35,8 @@
     "object.omit": "^2.0.1",
     "object.pick": "^1.2.0",
     "once": "^1.4.0",
+    "promise-locker": "^1.0.0",
+    "psem": "^1.0.0",
     "pump": "^1.0.2",
     "queuey": "mvayngrib/queuey#async",
     "safe-json-stringify": "^1.0.3",
