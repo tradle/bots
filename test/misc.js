@@ -216,9 +216,22 @@ test('hooks', co(function* (t) {
   const hooks = createHooks()
   const fired = {}
   const aArgs = [1, 2]
+
+  let defaultOn = true
+  yield new Promise(resolve => {
+    hooks.default('a', function () {
+      t.equal(defaultOn, true)
+      resolve()
+    })
+
+    hooks.fire('a', 1)
+  })
+
+  defaultOn = false
   hooks.hook('a', function (...args) {
     t.same(args, aArgs)
     fired['a'] = true
+    // prevent subsequent handlers
     return false
   })
 
@@ -227,6 +240,8 @@ test('hooks', co(function* (t) {
   t.ok(fired['a'])
   t.same(yield promiseA, aArgs)
 
+  // will not fire if bubble() is used because `false` is returned
+  // in the previous handler
   hooks.hook('a', function (...args) {
     t.fail('should have been prevented')
   })
