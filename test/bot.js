@@ -9,6 +9,7 @@ const {
 } = require('../lib/utils')
 
 const { fakeWrapper } = require('./utils')
+const { loudCo } = require('./utils')
 
 const rawCreateBot = require('../lib/bot')
 const { TYPE, SIG } = require('../lib/constants')
@@ -20,7 +21,7 @@ function createBot (opts) {
 
 function noop () {}
 
-test('bot.send', co(function* (t) {
+test('bot.send', loudCo(function* (t) {
   const from = 'bill'
   const to = 'ted'
   const cc = 'rufus'
@@ -60,7 +61,7 @@ test('bot.send', co(function* (t) {
 
 }))
 
-test('bot.receive', co(function* (t) {
+test('bot.receive', loudCo(function* (t) {
   t.plan(3)
   t.timeoutAfter(500)
 
@@ -81,9 +82,9 @@ test('bot.receive', co(function* (t) {
     t.same(yield bot.users.history.dump('ted'), expected)
   })
 
-  bot.hook.receive(checkHistory)
+  bot.hook('receive', checkHistory)
 
-  bot.hook.postreceive(co(function* () {
+  bot.hook('postreceive', co(function* () {
     expected = [
       shallowExtend(wrapper, {
         metadata: shallowExtend(wrapper.metadata, {
@@ -117,7 +118,7 @@ test('bot.receive', co(function* (t) {
   })
 }))
 
-test('bot.seal', co(function* (t) {
+test('bot.seal', loudCo(function* (t) {
   t.timeoutAfter(500)
 
   const expected = '74671fb032fffe385e710f2230f4568ccbb1753ced5393e3a00763266051a378'
@@ -135,11 +136,11 @@ test('bot.seal', co(function* (t) {
     return new Promise(resolve => bot.seals.once(event, resolve))
   })
 
-  bot.hook.readseal(co(function* ({ link }) {
+  bot.hook('readseal', co(function* ({ link }) {
     t.equal(link, expected)
   }))
 
-  bot.hook.wroteseal(co(function* ({ link }) {
+  bot.hook('wroteseal', co(function* ({ link }) {
     t.equal(link, expected)
   }))
 
@@ -163,7 +164,7 @@ test('bot.seal', co(function* (t) {
   t.end()
 }))
 
-test('presend and prereceive', co(function* (t) {
+test('presend and prereceive', loudCo(function* (t) {
   const bot = createBot({
     send: t.fail
   })
@@ -176,7 +177,7 @@ test('presend and prereceive', co(function* (t) {
     bot.receiver.once('skip', resolve)
   })
 
-  bot.hook.prereceive(function () {
+  bot.hook('prereceive', function () {
     return false
   })
 
@@ -187,7 +188,7 @@ test('presend and prereceive', co(function* (t) {
 
   yield bot.receive(wrapper)
 
-  bot.hook.presend(function () {
+  bot.hook('presend', function () {
     return false
   })
 
@@ -199,7 +200,7 @@ test('presend and prereceive', co(function* (t) {
   t.end()
 }))
 
-test('delete user, clear history', co(function* (t) {
+test('delete user, clear history', loudCo(function* (t) {
   const text = 'hey'
   const expected = createSimpleMessage(text)
   const from = 'bill'

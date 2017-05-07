@@ -13,6 +13,7 @@ const createStore = require('../lib/store')
 const cachify = require('../lib/cachify')
 const PromiseEmitter = require('../lib/promise-emitter')
 const levelup = require('../lib/levelup')
+const createHooks = require('../lib/hooks')
 
 test('cachify', co(function* (t) {
   const store = createStore({ inMemory: true })
@@ -207,6 +208,31 @@ test('recreate levelup', co(function* (t) {
   } catch (err) {
     t.ok(err)
   }
+
+  t.end()
+}))
+
+test('hooks', co(function* (t) {
+  const hooks = createHooks()
+  const fired = {}
+  const aArgs = [1, 2]
+  hooks.hook('a', function (...args) {
+    t.same(args, aArgs)
+    fired['a'] = true
+    return false
+  })
+
+  const promiseA = new Promise(resolve => hooks.once('a', (...args) => resolve(args)))
+  yield hooks.fire('a', ...aArgs)
+  t.ok(fired['a'])
+  t.same(yield promiseA, aArgs)
+
+  hooks.hook('a', function (...args) {
+    t.fail('should have been prevented')
+  })
+
+  hooks.on('a', t.fail)
+  yield hooks.bubble('a', ...aArgs)
 
   t.end()
 }))
