@@ -1,6 +1,7 @@
+const { SIG, TYPE } = require('../lib/constants')
 const { co, shallowExtend } = require('../lib/utils')
+const isGenerator = require('is-generator-function')
 const crypto = require('crypto')
-const SIG = '_s'
 
 exports.fakeWrapper = fakeWrapper
 exports.loudCo = loudCo
@@ -27,6 +28,7 @@ function fakeWrapper ({ from, to, object }) {
       }
     },
     message: {
+      [TYPE]: 'tradle.Message',
       [SIG]: newSig(),
       object
     }
@@ -50,6 +52,10 @@ function randomHex (n) {
 }
 
 function loudCo (gen) {
+  if (!isGenerator(gen)) {
+    throw new Error('expected a generator function, got a regular one')
+  }
+
   return co(function* (...args) {
     try {
       yield co(gen)(...args)
