@@ -159,7 +159,6 @@ On OSX, to enable connecting from the container to the host, run:
 # https://docs.docker.com/docker-for-mac/networking/#/known-limitations-use-cases-and-workarounds
 #   see: "I want to connect from a container to a service on the host"
 sudo ifconfig lo0 alias 10.200.10.1/24
-# on Windows we do not know yet how to achieve the same, so instead of connecting to Tradle server using localhost, you will need to use the IP address printed in console by docker. On our machine it was 192.168.99.100
 ```
 
 Start the server!
@@ -194,6 +193,8 @@ https://afv.com/wp-content/uploads/2014/11/Tongue.png
 # subscribe your bot's web server for webhooks
 # OSX: see the previous section for the explanation for the IP address value
 tradle-server$ newwebhook silly http://10.200.10.1:8000
+# Windows: use Docker's NAT address (10.0.75.1) to configure webhook:
+tradle-server$ newwebhook silly http://10.0.75.1:8000 
 # start things up
 tradle-server$ restartproviders
 ```
@@ -417,7 +418,7 @@ Objects sent to a user, or received from a user can be sealed on blockchain as f
 function echoAndSealStrategy (bot) {
   return bot.addReceiveHandler(co(function* ({ user, object, link /*, other goodies*/ }) {
     yield bot.send({ userId: user.id, object })
-    yield bot.seal({ link })
+    bot.seal({ link })
   }))
 }
 ```
