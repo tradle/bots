@@ -48,12 +48,12 @@ const init = co(function* init () {
     log(`Error: PROVIDER COULD NOT BE REACHED at ${conf.providerURL}\n`, err.message)
   }
 
-  const { bot } = app
+  const { bot, router } = app
   if (conf.strategies) {
     conf.strategies.forEach(relPath => {
       const absPath = path.resolve(process.cwd(), relPath)
       log('Using strategy from ' + absPath)
-      bot.strategies.use(require(absPath))
+      bot.strategies.use(require(absPath), { router })
     })
   }
 
