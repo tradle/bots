@@ -354,7 +354,8 @@ Implementing a basic strategy for a bot is easy. See [./lib/strategy](./lib/stra
 const { co } = require('bluebird').coroutine
 
 module.exports = function echoStrategy (bot) {
-  return bot.hook('receive', co(function* ({ user, object, link /*, other goodies*/ }) {
+  return bot.hook('receive', co(function* ({ user, wrapper, link /*, other goodies*/ }) {
+    const { object } = wrapper.message
     // we received `object`
     // send it back
     yield bot.send({ userId: user.id, object })
@@ -372,7 +373,7 @@ To handle incoming messages from users, add a receive handler as follows:
 
 ```js
 function myStrategy (bot) {
-  bot.hook('receive', function ({ user, object, link /*, other goodies*/ }) {
+  bot.hook('receive', function ({ user, wrapper, link /*, other goodies*/ }) {
     // return a Promise to ensure receive order
   })
 
@@ -417,7 +418,8 @@ Objects sent to a user, or received from a user can be sealed on blockchain as f
 
 ```js
 function echoAndSealStrategy (bot) {
-  return bot.hook('receive', co(function* ({ user, object, link /*, other goodies*/ }) {
+  return bot.hook('receive', co(function* ({ user, wrapper, link /*, other goodies*/ }) {
+    const { object } = wrapper.message
     yield bot.send({ userId: user.id, object })
     bot.seal({ link })
   }))
