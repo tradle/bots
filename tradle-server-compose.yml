@@ -28,8 +28,11 @@ services:
     tty: true
     stdin_open: true
   web-build:
-    image: tradle/web-app:local-1.2.0
+    image: tradle/web-app:env
     container_name: tradle-web-app
     restart: always
     ports:
       - "55555:80"
+    environment:
+      # if url contains any '~' characters, be sure to escape them:
+      - DEFAULT_TRADLE_SERVER_URL=${DEFAULT_TRADLE_SERVER_URL}

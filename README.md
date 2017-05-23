@@ -210,6 +210,14 @@ Your Tradle server is now running at `http://localhost:44444`, and `silly` provi
 1. Make sure `docker ps` shows `tradle-web-app` running
 2. Open `http://localhost:55555` in Google Chrome. Firefox, Safari and IE11 are almost there.
 
+Note: by default, the dockerized web app connects to your dockerized Tradle server. If you want to point it elsewhere, add a `.env` file in your tradle-bots directory, e.g.:
+
+```sh
+DEFAULT_TRADLE_SERVER_URL=https://botserver.tradle.io
+```
+
+You can also add additional Tradle servers to your web/mobile app from the app UI (see below, Mobile #3)
+
 #### Mobile
 
 1. Make sure your phone is on the same network as the computer running your Tradle server.
