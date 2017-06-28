@@ -6,7 +6,7 @@ volumes:
     external: true
 services:
   tradle:
-    image: tradle/server-cli:v4.1.1
+    image: tradle/server-cli:v4.2.0
     network_mode: bridge
     container_name: tradle-server
     restart: always
@@ -27,6 +27,7 @@ services:
       - server-storage:/opt/app/storage
     tty: true
     stdin_open: true
+#    command: "/opt/app/cli.js --bootstrap ./providers.js"
   web-build:
     image: tradle/web-app:env
     container_name: tradle-web-app
