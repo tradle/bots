@@ -31,6 +31,7 @@
     - [Sending messages](#sending-messages)
     - [Creating blockchain seals](#creating-blockchain-seals)
     - [Events](#events)
+    - [Shared storage](#shared-storage)
   - [Managing users](#managing-users)
 - [Validation](#validation)
   - [Models](#models)
@@ -348,6 +349,9 @@ as you can see in the session above, the console exposes a bunch of objects and 
     - bot.queued.send         [Function]    list queued sends
     - bot.queued.receive      [Function]    list queued receives
   - bot.send                  [Function]    send a message to a user
+  - bot.shared                [Object]      basic shared storage
+    - bot.shared.set          [Function]    set key-value mapping
+    - bot.shared.get          [Function]    get value by key
 ```
 
 ### Strategies
@@ -452,6 +456,31 @@ the `bot` object emits the following events:
 - 'sent': when a message has been sent to the Tradle server for deliver to the client
 - 'seal:push', 'seal:wrote', 'seal:read': re-emitted for convenience from `bot.seals`
 - 'user:create', 'user:delete', 'user:clear', 'user:update': re-emitted for convenience from `bot.users`
+
+#### Shared storage
+
+A basic shared key-value storage option is available at `bot.shared`, e.g.:
+
+```js
+bot.addReceiveHandler(co(function* ({ user, object }) {
+  const excellent = bot.shared.get('excellentUsers') || []
+  if (!excellent.includes(user.id) && isExcellentMessage(object)) {
+    // remember who's excellent
+    excellent.push(user.id)
+    bot.shared.set('excellentUsers', excellent)
+    yield bot.send({ 
+      userId: user.id, 
+      object: 'wow, I just realized...you are excellent!' 
+    })
+  }
+
+  // ...
+  // be extra excellent to excellent users
+}))
+
+// ...
+// batch-send excellent users special stuff
+```
 
 ### Managing users
 
