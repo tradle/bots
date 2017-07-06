@@ -435,6 +435,23 @@ function echoAndSealStrategy (bot) {
 }
 ```
 
+To handle seals being written/read from the blockchain:
+```js
+// see https://github.com/tradle/server-cli#sample `wroteseal` event
+// for a full list of available properties
+bot.seals.addOnReadHandler(co(function* ({ link, txId /*, ...*/ }) {
+  // object with link `link` has been detected
+  // on the blockchain in the transaction with id `txId`
+}))
+
+// see https://github.com/tradle/server-cli#sample `wroteseal` event
+// for a full list of available properties
+bot.seals.addOnWroteHandler(co(function* ({ link, txId /*, ...*/ }) {
+  // object with link `link` has been written
+  // to the blockchain in the transaction with id `txId`
+}))
+```
+
 #### Events
 
 the `bot.users` object emits the following events:
