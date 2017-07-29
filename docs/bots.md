@@ -13,6 +13,6 @@ The [Hackathon Inviter bot](http://github.com/tradle/bot-inviter), live at [http
 
 The [Sell Some Products](http://github.com/tradle/bot-products) can be configured to walk users through a purchase of any product for which you've developed data models. The [example bot](https://github.com/tradle/bot-products/tree/master/example.js) for this strategy is currently live on [https://bots.tradle.io](https://bots.tradle.io) as the Age Police. It can issue you proof-of-age certificates.
 
-[Style Me](github.com/tradle/bot-style-me) is a bot that lets you edit your provider's styles in-chat, and see the results in realtime.
+[Style Me](http://github.com/tradle/bot-style-me) is a bot that lets you edit your provider's styles in-chat, and see the results in realtime.
 
 As you can see, bots can range from mini-behaviors (nano-bots), which can be assembled together, and mega-bots, which have an entire complex agenda. We look forward to showcasing your bots!
