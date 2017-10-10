@@ -52,14 +52,14 @@
     "warn:docker": "echo '\\033[0;31mIF THIS TAKES MORE THAN A FEW SECONDS, DOCKER IS NOT RUNNING\\033[0m'",
     "createvolumes": "docker volume create --name server-conf && docker volume create --name server-storage",
     "tradle-compose": "docker-compose -f ./tradle-server-compose.yml",
-    "update": "yarn run tradle-compose -- pull",
-    "up": "yarn run tradle-compose -- up -d",
-    "server:stop": "yarn run tradle-compose -- stop",
+    "update": "yarn run tradle-compose pull",
+    "up": "yarn run tradle-compose up -d",
+    "server:stop": "yarn run tradle-compose stop",
     "server": "yarn run createvolumes && yarn run update && yarn run up",
     "server-console": "docker attach tradle-server",
-    "echo": "yarn run start -- --conf ./conf/echo.json",
-    "silly": "yarn run start -- --conf ./conf/silly.json",
-    "products": "yarn run start -- --conf ./conf/products.json",
+    "echo": "yarn run start --conf ./conf/echo.json",
+    "silly": "yarn run start --conf ./conf/silly.json",
+    "products": "yarn run start --conf ./conf/products.json",
     "postmerge": "yarn && yarn run update"
   }
 }
