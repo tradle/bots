@@ -152,7 +152,7 @@ yarn --ignore-optional
 
 ### Run Tradle server
 
-This uses the Docker Compose file [tradle-server-compose.yml](./tradle-server-compose.yml), at the root of your `tradle-bots` folder:
+This uses the Docker Compose file [docker-compose.yml](./docker-compose.yml), at the root of your `tradle-bots` folder:
 
 On OSX, to enable connecting from the container to the host, run:
 
@@ -202,7 +202,7 @@ tradle-server$ restartproviders
 
 Your Tradle server is now running at `http://localhost:44444`, and `silly` provider is running at `http://localhost:44444/silly`
 
-*Note: when attached to a Docker container, if you hit Ctrl+C, you will kill it. Docker Compose will automatically restart it (see the `restart: always` flag in [tradle-server-compose.yml](./tradle-server-compose.yml)), but to be nice, detach with `Ctrl+P Ctrl+Q`*
+*Note: when attached to a Docker container, if you hit Ctrl+C, you will kill it. Docker Compose will automatically restart it (see the `restart: always` flag in [docker-compose.yml](./docker-compose.yml)), but to be nice, detach with `Ctrl+P Ctrl+Q`*
 
 ### Connect your Tradle app
 
