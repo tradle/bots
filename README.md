@@ -20,6 +20,7 @@
   - [Run Tradle server](#run-tradle-server)
   - [Create a provider](#create-a-provider)
   - [Charge Provider's Wallet](#charge-providers-wallet)
+  - [Enable the In-House Bot](#enable-the-in-house-bot)
   - [Connect your Tradle app](#connect-your-tradle-app)
     - [Web](#web)
     - [Mobile](#mobile)
@@ -216,6 +217,17 @@ Your Tradle server is now running at `http://localhost:44444`, and `silly` provi
 ```
 
 In order for the provider to write seals to the blockchain, you need to charge this address, for example from this [faucet](https://faucet.rinkeby.io)
+
+### Enable the In-House Bot
+
+By default, the in-house bot is off. To enable it, use:
+
+```sh
+tradle-server$ autoprompt silly true
+tradle-server$ autoverify silly true
+```
+
+See [docs](https://github.com/tradle/server-cli) on configuring your provider
 
 ### Connect your Tradle app
 
