@@ -218,13 +218,29 @@ Your Tradle server is now running at `http://localhost:44444`, and `silly` provi
 
 In order for the provider to write seals to the blockchain, you need to charge this address, for example from this [faucet](https://faucet.rinkeby.io)
 
-### Enable the In-House Bot
-
-By default, the in-house bot is off. To enable it, use:
+When seals are written to the blockchain, you'll see something like this in the tradle-server console:
 
 ```sh
-tradle-server$ autoprompt silly true
+#  bank silly +2s wrote chain-seal for tradle.Verification in tx with id 0x5ddc1bfbb4d31adc2efdc487e9edfd843d54a7323b349970f646ed0fc18e59b8
+#  bank silly +2s wrote chain-seal for tradle.PersonalInfo in tx with id 0x9ab91f52871b79d81d768f2b3e9125a146094bad479ff519a8222fc7912b24ad
+```
+
+A few minutes later, the customer will be able to see the same seal in the Data Security section of sealed object (e.g. a form or verification). The app typically syncs once every 5-10 minutes. Refresh it to force a sync.
+
+![](images/data-security.png?raw=true)
+
+### Enable the In-House Bot
+
+By default, the in-house bot is off. For example, you can enable it and enable a product:
+
+```sh
+# turn on the auto-prompter which will guide you through product purchasers
+tradle-server$ autoprompt silly true 
+# auto-verify forms submitted by the customer
 tradle-server$ autoverify silly true
+# enable some products
+tradle-server$ enableproduct silly tradle.CurrentAccount
+tradle-server$ enableproduct silly tradle.MortgageProduct
 ```
 
 See [docs](https://github.com/tradle/server-cli) on configuring your provider
