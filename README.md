@@ -19,6 +19,7 @@
   - [Install dependencies](#install-dependencies)
   - [Run Tradle server](#run-tradle-server)
   - [Create a provider](#create-a-provider)
+  - [Charge Provider's Wallet](#charge-providers-wallet)
   - [Connect your Tradle app](#connect-your-tradle-app)
     - [Web](#web)
     - [Mobile](#mobile)
@@ -203,6 +204,18 @@ tradle-server$ restartproviders
 Your Tradle server is now running at `http://localhost:44444`, and `silly` provider is running at `http://localhost:44444/silly`
 
 *Note: when attached to a Docker container, if you hit Ctrl+C, you will kill it. Docker Compose will automatically restart it (see the `restart: always` flag in [docker-compose.yml](./docker-compose.yml)), but to be nice, detach with `Ctrl+P Ctrl+Q`*
+
+### Charge Provider's Wallet
+
+`restartproviders` will print your provider's wallet's address, e.g.:
+
+```sh
+# network: ethereum rinkeby
+# silly Balance: 0
+# silly : Send coins to 0x0000000000000000000000000000000000000000
+```
+
+In order for the provider to write seals to the blockchain, you need to charge this address, for example from this [faucet](https://faucet.rinkeby.io)
 
 ### Connect your Tradle app
 
